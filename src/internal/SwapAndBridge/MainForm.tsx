@@ -10,8 +10,8 @@ import {
   useTxStateContextStore
 } from './hooks'
 import { TxState } from './TxState'
-import { QuoteRequest, useGetQuote } from '../api'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { QuoteRequest, useGetQuote, type Tag, type TokenInfo } from '../api'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Fraction } from 'bi-fraction'
 import { formatTokenAmount, slippageStore, isApproveValid } from '../utils'
 import { TxInfoProps, routesItem } from './TxInfo'
@@ -39,8 +39,11 @@ import {
 } from '../../config'
 import wheelSprites from '../assets/images/wheel-sprites.png'
 import successSprites from '../assets/images/success-sprites.png'
+import ethTokenIcon from '../assets/images/tokens/eth.png'
+import defaultTokenIcon from '../assets/images/default-token-icon.png'
 import { getAssetSrc } from '../utils/getAssetSrc'
 import { Text } from '../ui'
+import { zeroAddress } from 'viem'
 export interface QuoteInfo {
   isFetching: boolean
   error: string | null
@@ -86,8 +89,6 @@ export const MainForm = () => {
     toTokenInfo,
     fromAmount,
     toAmount,
-    setFromTokenInfo,
-    setToTokenInfo,
     setToAmount,
     setAutoSlippage,
     autoSlippage
@@ -128,6 +129,130 @@ export const MainForm = () => {
   const toAllowedChainIds = networks.to
   const fromAllowedTokens = getAllowedTokens('from')
   const toAllowedTokens = getAllowedTokens('to')
+
+  const applyTokenSelection = useCallback(
+    (nextFrom: TokenInfo, nextTo: TokenInfo) => {
+      useSwapAndBridgeContextStore.setState((state) => ({
+        ...state,
+        fromTokenInfo: nextFrom,
+        toTokenInfo: nextTo,
+        fromAmount: '',
+        toAmount: ''
+      }))
+    },
+    []
+  )
+
+  useLayoutEffect(() => {
+    if (tokens?.length) return
+
+    const buildPreviewToken = ({
+      chainId,
+      address = zeroAddress,
+      symbol = 'ETH'
+    }: {
+      chainId: number
+      address?: `0x${string}`
+      symbol?: string
+    }): TokenInfo => ({
+      name: symbol,
+      address,
+      chain_id: chainId,
+      decimals: 18,
+      symbol,
+      logo: getAssetSrc(
+        symbol.toUpperCase() === 'ETH' || address === zeroAddress
+          ? ethTokenIcon
+          : defaultTokenIcon
+      ),
+      tags: ['pin'] as Tag[]
+    })
+
+    const resolvePreviewToken = (
+      side: 'from' | 'to',
+      fallbackChainId: number,
+      fallbackToken: typeof fromTokenInfo
+    ) => {
+      const preset = defaultTokens[side]
+      if (preset && preset.chainId === fallbackChainId) {
+        return buildPreviewToken({
+          chainId: preset.chainId,
+          address: preset.address as `0x${string}`,
+          symbol: preset.symbol ?? fallbackToken.symbol
+        })
+      }
+
+      if (fallbackToken.chain_id === fallbackChainId) {
+        return fallbackToken
+      }
+
+      return buildPreviewToken({
+        chainId: fallbackChainId,
+        symbol: fallbackToken.symbol
+      })
+    }
+
+    let nextFrom = fromTokenInfo
+    let nextTo = toTokenInfo
+
+    if (mode === 'swap') {
+      const swapChainId =
+        defaultTokens.from?.chainId ??
+        defaultTokens.to?.chainId ??
+        fromAllowedChainIds?.[0] ??
+        toAllowedChainIds?.[0] ??
+        fromTokenInfo.chain_id
+
+      nextFrom = resolvePreviewToken('from', swapChainId, fromTokenInfo)
+      nextTo = resolvePreviewToken('to', swapChainId, toTokenInfo)
+    } else {
+      if (fromAllowedChainIds?.[0]) {
+        nextFrom = resolvePreviewToken(
+          'from',
+          fromAllowedChainIds[0],
+          fromTokenInfo
+        )
+      } else if (defaultTokens.from?.chainId) {
+        nextFrom = resolvePreviewToken(
+          'from',
+          defaultTokens.from.chainId,
+          fromTokenInfo
+        )
+      }
+
+      if (toAllowedChainIds?.[0]) {
+        nextTo = resolvePreviewToken('to', toAllowedChainIds[0], toTokenInfo)
+      } else if (defaultTokens.to?.chainId) {
+        nextTo = resolvePreviewToken(
+          'to',
+          defaultTokens.to.chainId,
+          toTokenInfo
+        )
+      }
+    }
+
+    const isFromChanged =
+      nextFrom.chain_id !== fromTokenInfo.chain_id ||
+      nextFrom.address !== fromTokenInfo.address ||
+      nextFrom.symbol !== fromTokenInfo.symbol
+    const isToChanged =
+      nextTo.chain_id !== toTokenInfo.chain_id ||
+      nextTo.address !== toTokenInfo.address ||
+      nextTo.symbol !== toTokenInfo.symbol
+
+    if (isFromChanged || isToChanged) {
+      applyTokenSelection(nextFrom, nextTo)
+    }
+  }, [
+    applyTokenSelection,
+    defaultTokens,
+    fromAllowedChainIds,
+    fromTokenInfo,
+    mode,
+    toAllowedChainIds,
+    toTokenInfo,
+    tokens
+  ])
 
   useEffect(() => {
     if (
@@ -535,20 +660,16 @@ export const MainForm = () => {
       nextTo.chain_id !== toTokenInfo.chain_id ||
       nextTo.address !== toTokenInfo.address
 
-    if (isFromChanged) {
-      setFromTokenInfo(nextFrom)
-    }
-    if (isToChanged) {
-      setToTokenInfo(nextTo)
+    if (isFromChanged || isToChanged) {
+      applyTokenSelection(nextFrom, nextTo)
     }
 
     didApplyWidgetDefaultsRef.current = true
   }, [
+    applyTokenSelection,
     fromTokenInfo,
     fromAllowedChainIds,
     mode,
-    setFromTokenInfo,
-    setToTokenInfo,
     tokens,
     toAllowedChainIds,
     toTokenInfo,

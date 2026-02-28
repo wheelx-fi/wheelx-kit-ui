@@ -6,6 +6,7 @@ import {
   useDisclosure
 } from '@chakra-ui/react'
 import * as React from 'react'
+import { useWheelxWidgetStyles } from '../../config'
 
 export interface TooltipProps extends ChakraTooltip.RootProps {
   showArrow?: boolean
@@ -31,6 +32,15 @@ export const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>(
 
     if (disabled) return children
 
+    const widgetStyles = useWheelxWidgetStyles()
+    const tooltipContentStyles = widgetStyles.quoteTooltipContent || {}
+    const tooltipBg =
+      typeof tooltipContentStyles.bg === 'string'
+        ? tooltipContentStyles.bg
+        : typeof tooltipContentStyles.backgroundColor === 'string'
+          ? tooltipContentStyles.backgroundColor
+          : 'white'
+
     return (
       <ChakraTooltip.Root {...rest}>
         <ChakraTooltip.Trigger asChild>{children}</ChakraTooltip.Trigger>
@@ -40,8 +50,9 @@ export const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>(
               ref={ref}
               color={'black'}
               css={{
-                '--tooltip-bg': 'white'
+                '--tooltip-bg': tooltipBg
               }}
+              {...tooltipContentStyles}
               {...contentProps}
             >
               {showArrow && (

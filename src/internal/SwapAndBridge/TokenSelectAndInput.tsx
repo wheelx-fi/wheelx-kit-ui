@@ -59,6 +59,7 @@ export const TokenSelectAndInput = ({
   const widgetStyles = useWheelxWidgetStyles()
   const quickHalfButtonStyles = widgetStyles.quickHalfButton || {}
   const quickMaxButtonStyles = widgetStyles.quickMaxButton || {}
+  const recipientBadgeStyles = widgetStyles.recipientBadge || {}
 
   const [isFocused, setIsFocused] = useState(false)
   const [isNative, setIsNative] = useState(false)
@@ -296,6 +297,8 @@ export const TokenSelectAndInput = ({
               variant={'content8'}
               backgroundColor={'#fff'}
               padding={'2px'}
+              borderRadius={'14px'}
+              {...recipientBadgeStyles}
               {...widgetStyles.balanceText}
             >
               {sliceAddress(differentAddress)}
@@ -315,6 +318,7 @@ export const TokenSelectAndInput = ({
               onClick={() => {
                 onOpenDialog?.()
               }}
+              {...recipientBadgeStyles}
               {...widgetStyles.balanceText}
             >
               Enter Address
@@ -330,6 +334,8 @@ export const TokenSelectAndInput = ({
             variant={'content8'}
             backgroundColor={'#fff'}
             padding={'2px'}
+            borderRadius={'14px'}
+            {...recipientBadgeStyles}
             {...widgetStyles.balanceText}
           >
             {sliceAddress(differentAddress ? differentAddress : address)}

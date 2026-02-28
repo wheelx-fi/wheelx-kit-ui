@@ -14,21 +14,19 @@ bridge and swap experience with minimal setup while still keeping control over:
 
 ## Installation
 
-This package is currently consumed from a local path during development.
-
-If you are using it from another local project:
+Install from npm:
 
 ```bash
-pnpm add @wheelx/widget@file:/absolute/path/to/wheelx-kit-ui
+pnpm add @wheelx/widget
 ```
 
-Example:
+Install host-side wallet UI dependency:
 
 ```bash
-pnpm add @wheelx/widget@file:/path/to/wheelx-kit-ui
+pnpm add @rainbow-me/rainbowkit
 ```
 
-Build the package locally when needed:
+Build the package locally when working on this repository:
 
 ```bash
 pnpm build
@@ -185,6 +183,9 @@ Behavior:
 - the widget enforces same-chain selection
 - the token modal hides the left chain list
 - clicking `From` or `To` only shows tokens for the currently selected chain
+- initial token rendering is aligned to the configured chain before token data
+  finishes loading, so the widget does not flash the built-in Soneium/Base
+  defaults first
 
 ### 3. Network Restriction
 
@@ -307,11 +308,13 @@ const config: WheelxWidgetConfig = {
 - `formContainer`
 - `sectionContainer`
 - `tokenSelector`
+- `recipientBadge`
 - `amountInputContainer`
 - `tokenModalContent`
 - `tokenModalChainPanel`
 - `tokenModalTokenPanel`
 - `quoteInfoContainer`
+- `quoteTooltipContent`
 - `quoteInfoCard`
 - `txStateCard`
 - `txStateRouteContainer`

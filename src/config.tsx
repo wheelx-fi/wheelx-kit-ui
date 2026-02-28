@@ -46,6 +46,7 @@ export interface WidgetStyleOverrides {
   tokenPrimaryText?: Record<string, unknown>
   tokenSecondaryText?: Record<string, unknown>
   balanceText?: Record<string, unknown>
+  recipientBadge?: Record<string, unknown>
   amountInputContainer?: Record<string, unknown>
   amountInputText?: Record<string, unknown>
   amountUsdText?: Record<string, unknown>
@@ -82,6 +83,7 @@ export interface WidgetStyleOverrides {
   slippageDescriptionText?: Record<string, unknown>
   slippageButtonText?: Record<string, unknown>
   quoteInfoContainer?: Record<string, unknown>
+  quoteTooltipContent?: Record<string, unknown>
   quoteInfoCard?: Record<string, unknown>
   quoteInfoLabel?: Record<string, unknown>
   quoteInfoValue?: Record<string, unknown>
