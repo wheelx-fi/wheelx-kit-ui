@@ -4,6 +4,17 @@
   "description": "Reusable WheelX bridge and swap widget for Next.js applications.",
   "license": "MIT",
   "author": "WheelX",
+  "homepage": "https://github.com/wheelx-fi/wheelx-kit-ui",
+  "bugs": {
+    "url": "https://github.com/wheelx-fi/wheelx-kit-ui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wheelx-fi/wheelx-kit-ui.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "wheelx",
     "widget",
@@ -34,6 +45,7 @@
   "scripts": {
     "clean": "rm -rf dist tsconfig.build.tsbuildinfo",
     "build": "pnpm run clean && tsc -p tsconfig.build.json && mkdir -p dist/internal && cp -R src/internal/assets dist/internal/assets",
+    "prepublishOnly": "pnpm build",
     "typecheck": "tsc -p tsconfig.build.json --noEmit",
     "demo:dev": "pnpm --dir demo dev",
     "demo:build": "pnpm --dir demo build"
