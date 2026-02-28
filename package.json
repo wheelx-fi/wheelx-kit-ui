@@ -45,9 +45,12 @@
   "scripts": {
     "clean": "rm -rf dist tsconfig.build.tsbuildinfo",
     "build": "pnpm run clean && tsc -p tsconfig.build.json && mkdir -p dist/internal && cp -R src/internal/assets dist/internal/assets",
+    "prepare": "pnpm build",
     "prepublishOnly": "pnpm build",
     "typecheck": "tsc -p tsconfig.build.json --noEmit",
+    "predemo:dev": "pnpm build",
     "demo:dev": "pnpm --dir demo dev",
+    "predemo:build": "pnpm build",
     "demo:build": "pnpm --dir demo build"
   },
   "sideEffects": false,

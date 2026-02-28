@@ -42,11 +42,17 @@ Install dependencies for the package and the demo from the repository root:
 pnpm install
 ```
 
+`pnpm install` runs the package build automatically through `prepare`, so a fresh
+clone does not require a separate manual build before starting the demo.
+
 Run the demo:
 
 ```bash
 pnpm demo:dev
 ```
+
+`pnpm demo:dev` also rebuilds the package first to keep `dist/` in sync with the
+current source tree.
 
 Build the demo:
 

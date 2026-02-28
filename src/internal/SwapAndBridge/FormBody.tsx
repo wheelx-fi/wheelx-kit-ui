@@ -14,7 +14,7 @@ import {
 } from './hooks'
 import SelectTokenModal from '../SelectTokenModal'
 import { TokenSelectAndInput } from './TokenSelectAndInput'
-import SwitchIcon from '../assets/icons/switch.svg'
+import SwitchIcon from '../assets/icons/switch.svg?url'
 import { TxInfo } from './TxInfo'
 import { formatTokenAmount, slippageStore } from '../utils'
 import { ArcTestnetChainId } from '../consts/chainsInfo'

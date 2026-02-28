@@ -1,5 +1,5 @@
 import { InputGroup, Input } from '@chakra-ui/react'
-import SearchIcon from '../assets/icons/search.svg'
+import SearchIcon from '../assets/icons/search.svg?url'
 import { useCallback, useEffect, useState } from 'react'
 import { debounce } from '../SwapAndBridge/utils'
 import { useWheelxWidgetStyles } from '../../config'

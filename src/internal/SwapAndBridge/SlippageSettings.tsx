@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 
 import { MobileTooltip } from '../ui/tooltip'
-import InfoIcon from '../assets/icons/info.svg'
+import InfoIcon from '../assets/icons/info.svg?url'
 import { useSwapAndBridgeContextStore } from './hooks'
 import { Heading, Text } from '../ui'
 import { slippageStore } from '../utils'

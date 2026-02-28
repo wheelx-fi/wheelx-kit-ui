@@ -9,14 +9,14 @@ import {
 } from '../api'
 
 import { Heading } from '../ui'
-import BackIcon from '../assets/icons/back.svg'
+import BackIcon from '../assets/icons/back.svg?url'
 
 import {
   useChainsAndTokensForSelect,
   useUserHasSelectedFromNetwork,
   useSearchTokens
 } from './hooks'
-import CloseIcon from '../assets/icons/close.svg'
+import CloseIcon from '../assets/icons/close.svg?url'
 import { MobileContent } from './MobileContent'
 import { DesktopContent } from './DesktopContent'
 import { useAccount } from 'wagmi'
@@ -413,6 +413,7 @@ const SelectTokenModal = ({
             boxShadow={'0px 12px 36px 0px #007B9D59'}
             h={'min(85vh, 756px)'}
             bg={'white'}
+            color={'#15003E'}
             {...widgetStyles.tokenModalContent}
           >
             <VStack

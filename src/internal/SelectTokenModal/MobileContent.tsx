@@ -9,10 +9,10 @@ import {
 
 import { Network } from './Network'
 import { Text } from '../ui'
-import BackIcon from '../assets/icons/back.svg'
-import SearchIcon from '../assets/icons/search.svg'
-import ArrowDownIcon from '../assets/icons/arrow-down.svg'
-import ArrowFillRightIcon from '../assets/icons/arrow-fill-right.svg'
+import BackIcon from '../assets/icons/back.svg?url'
+import SearchIcon from '../assets/icons/search.svg?url'
+import ArrowDownIcon from '../assets/icons/arrow-down.svg?url'
+import ArrowFillRightIcon from '../assets/icons/arrow-fill-right.svg?url'
 import {
   Dispatch,
   memo,

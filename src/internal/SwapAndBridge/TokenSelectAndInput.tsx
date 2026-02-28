@@ -7,7 +7,7 @@ import { TokenInfo } from '../api'
 
 import { TokenInfoCom } from './TokenInfoCom'
 
-import ArrowDownIcon from '../assets/icons/arrow-down.svg'
+import ArrowDownIcon from '../assets/icons/arrow-down.svg?url'
 import { Heading, Text } from '../ui'
 import {
   debounce,
@@ -23,7 +23,7 @@ import {
 } from './hooks'
 import { FiEdit } from 'react-icons/fi'
 import { useDifferentAddressStore } from '../stores/useDifferentAddressStore'
-import MetamaskIcon from '../assets/icons/metamask.svg'
+import MetamaskIcon from '../assets/icons/metamask.svg?url'
 import { useHyperliquidBalance } from '../api/useHyperliquid'
 import { useWheelxWidgetStyles } from '../../config'
 import { AssetIcon } from '../ui/AssetIcon'

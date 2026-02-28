@@ -31,7 +31,7 @@ import {
   useTxStateContextStore
 } from './hooks'
 import { getErc20Approval } from './utils'
-import WalletIcon from '../assets/icons/wallet.svg'
+import WalletIcon from '../assets/icons/wallet.svg?url'
 import { Heading, Text } from '../ui'
 import { useUSDTHandler } from './utils/twoApprove'
 // import { bottomToaster } from '../ui/toaster'

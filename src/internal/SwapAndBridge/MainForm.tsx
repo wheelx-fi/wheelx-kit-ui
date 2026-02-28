@@ -718,6 +718,7 @@ export const MainForm = () => {
           <VStack
             pos={'relative'}
             bg={'white'}
+            color={'#15003E'}
             boxShadow={'0px 12px 36px 0px #007B9D59'}
             px={{
               base: 2.5,

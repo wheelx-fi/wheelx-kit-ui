@@ -1,6 +1,6 @@
 import { HStack, VStack } from '@chakra-ui/react'
 
-import ArrowFillRightIcon from '../assets/icons/arrow-fill-right.svg'
+import ArrowFillRightIcon from '../assets/icons/arrow-fill-right.svg?url'
 
 import { Network } from './Network'
 import { Text } from '../ui'

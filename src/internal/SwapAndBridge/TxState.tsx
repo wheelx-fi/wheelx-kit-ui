@@ -15,15 +15,15 @@ import {
 } from '../utils'
 
 import { useSwapAndBridgeContextStore, useTxStateContextStore } from './hooks'
-import BackIcon from '../assets/icons/back.svg'
+import BackIcon from '../assets/icons/back.svg?url'
 import { BoxWithBg } from '../ui/BoxWithBg'
-import ArrowRightIcon from '../assets/icons/arrow-right.svg'
-import LinkIcon from '../assets/icons/link.svg'
-import TimeIcon from '../assets/icons/time.svg'
-import DateIcon from '../assets/icons/date.svg'
-import MoneyIcon from '../assets/icons/money.svg'
+import ArrowRightIcon from '../assets/icons/arrow-right.svg?url'
+import LinkIcon from '../assets/icons/link.svg?url'
+import TimeIcon from '../assets/icons/time.svg?url'
+import DateIcon from '../assets/icons/date.svg?url'
+import MoneyIcon from '../assets/icons/money.svg?url'
 import { Text, Heading } from '../ui'
-import PlusIcon from '../assets/icons/plus.svg'
+import PlusIcon from '../assets/icons/plus.svg?url'
 import { TokenAmountHeading, TokenIconWithNetworkLogo } from '../commons'
 import { Fraction } from 'bi-fraction'
 import Timer from './Timer'
@@ -494,6 +494,7 @@ export const TxState = ({
           md: 4
         }}
         w={'100%'}
+        color={'#15003E'}
       >
         <AssetIcon
           src={BackIcon}

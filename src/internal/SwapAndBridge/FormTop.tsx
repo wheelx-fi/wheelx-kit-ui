@@ -47,15 +47,8 @@ export const FormTop = ({ refetchQuote, quoteInfo }: Props) => {
             onClick={() => {
               refetchQuote()
             }}
-            className="animation-loading"
-            animationName={isLoadingRefresh ? 'keyframes-loading' : undefined}
             color={'#81728C'}
-            style={{
-              animation:
-                isLoadingRefresh || !quoteInfo?.request_id
-                  ? undefined
-                  : 'svg_loader 30s linear 0s infinite normal'
-            }}
+            animation={isLoadingRefresh ? 'spin 0.9s linear infinite' : undefined}
           />
         </HStack>
         <SlippageSettings refetchQuote={refetchQuote} />

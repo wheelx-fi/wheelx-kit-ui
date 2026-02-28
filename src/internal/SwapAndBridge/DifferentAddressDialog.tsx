@@ -9,7 +9,7 @@ import {
   VStack
 } from '@chakra-ui/react'
 import { Heading } from '../ui'
-import CloseIcon from '../assets/icons/close.svg'
+import CloseIcon from '../assets/icons/close.svg?url'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { isAddress } from 'viem'
