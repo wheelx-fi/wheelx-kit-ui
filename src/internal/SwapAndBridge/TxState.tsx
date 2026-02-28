@@ -1,4 +1,4 @@
-import { VStack, HStack, Icon, Button, Box, Image } from '@chakra-ui/react'
+import { VStack, HStack, Button, Box, Image } from '@chakra-ui/react'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { useEffect } from 'react'
@@ -34,6 +34,7 @@ import { useRetryAbleTransactionReceipt } from './hooks/useRetryAbleTransactionR
 import { hyperliquidChainId } from './utils/consts'
 import { useChainsStore } from '../stores/useChainsStore'
 import { useWheelxWidgetStyles } from '../../config'
+import { AssetIcon } from '../ui/AssetIcon'
 
 interface Props {
   resetQuoteInfo: () => void
@@ -326,7 +327,8 @@ export const TxState = ({
             color={'brand-purple'}
             {...txStateStatusLinkStyles}
           >
-            • {sliceAddress(fromTxHash)} <Icon boxSize={'14px'} as={LinkIcon} />
+            • {sliceAddress(fromTxHash)}{' '}
+            <AssetIcon src={LinkIcon} alt="view tx" boxSize={'14px'} />
           </Text>
         </Link>
       )
@@ -402,12 +404,13 @@ export const TxState = ({
     if (isCompleted) {
       buttonContent = (
         <HStack gap={1}>
-          <Icon
+          <AssetIcon
+            src={PlusIcon}
+            alt="new transaction"
             boxSize={{
               base: '16px',
               md: '24px'
             }}
-            as={PlusIcon}
           />
           New {buttonDoingAndFinishText}
         </HStack>
@@ -492,18 +495,18 @@ export const TxState = ({
         }}
         w={'100%'}
       >
-        <Icon
+        <AssetIcon
+          src={BackIcon}
+          alt="back"
           pos={'absolute'}
           top={4}
           left={4}
           onClick={onBack}
           cursor={'pointer'}
-          as={BackIcon}
           boxSize={{
             base: '24px',
             md: '40px'
           }}
-          color={'#81728C'}
         />
         {renderAnimation()}
         <BoxWithBg
@@ -550,12 +553,13 @@ export const TxState = ({
                 </VStack>
               </HStack>
             </BoxWithBg>
-            <Icon
+            <AssetIcon
+              src={ArrowRightIcon}
+              alt="to"
               boxSize={{
                 base: '20px',
                 md: '32px'
               }}
-              as={ArrowRightIcon}
             />
             <BoxWithBg
               bg={'white'}
@@ -609,7 +613,11 @@ export const TxState = ({
                             {...txStateStatusLinkStyles}
                           >
                             • {sliceAddress(toTxHash)}{' '}
-                            <Icon boxSize={'14px'} as={LinkIcon} />
+                            <AssetIcon
+                              src={LinkIcon}
+                              alt="view tx"
+                              boxSize={'14px'}
+                            />
                           </Text>
                         </Link>
                       ) : (
@@ -646,7 +654,7 @@ export const TxState = ({
           <VStack w={'100%'} fontSize={'xs'} gap={3}>
             <HStack w={'100%'} justify={'space-between'}>
               <HStack gap={1}>
-                <Icon as={DateIcon} />
+                <AssetIcon src={DateIcon} alt="date" boxSize={'16px'} />
                 <Text
                   variant={{
                     base: 'content8',
@@ -671,7 +679,7 @@ export const TxState = ({
             </HStack>
             <HStack w={'100%'} justify={'space-between'}>
               <HStack gap={1}>
-                <Icon as={TimeIcon} />
+                <AssetIcon src={TimeIcon} alt="time" boxSize={'16px'} />
                 <Text
                   variant={{
                     base: 'content8',
@@ -692,7 +700,7 @@ export const TxState = ({
 
             <HStack w={'100%'} justify={'space-between'}>
               <HStack gap={1}>
-                <Icon as={MoneyIcon} />
+                <AssetIcon src={MoneyIcon} alt="recipient" boxSize={'16px'} />
                 <Text
                   variant={{
                     base: 'content8',

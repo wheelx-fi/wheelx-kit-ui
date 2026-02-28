@@ -1,4 +1,4 @@
-import { HStack, Icon, Spinner, VStack, Image } from '@chakra-ui/react'
+import { HStack, Spinner, VStack, Image } from '@chakra-ui/react'
 import { TokenAndAddress } from './TokenAndAddress'
 import { TokenInfo, TokenInfoWithBalance, TokenBalance } from '../api'
 import { Text } from '../ui'
@@ -23,6 +23,7 @@ import { useChainsStore } from '../stores'
 import noDataImage from '../assets/images/no_data.png'
 import { getAssetSrc } from '../utils/getAssetSrc'
 import { useWheelxWidgetStyles } from '../../config'
+import { AssetIcon } from '../ui/AssetIcon'
 
 const deduplicateByAddressAndChainId = (tokens: TokenInfo[]): TokenInfo[] => {
   const addressMap = new Map<string, TokenInfo>()
@@ -334,7 +335,7 @@ export const TokenList = ({
               {...categoryTabStyles}
               {...(currentTab === item.type ? categoryTabActiveStyles : {})}
             >
-              <Icon as={item.icon} boxSize={'14px'} />
+              <AssetIcon src={item.icon} alt={item.name} boxSize={'14px'} />
               <Text {...widgetStyles.tokenModalCategoryTabText}>
                 {item.name}
               </Text>

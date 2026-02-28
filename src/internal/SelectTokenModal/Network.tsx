@@ -1,4 +1,4 @@
-import { Box, HStack, Icon, Image, useBreakpointValue } from '@chakra-ui/react'
+import { Box, HStack, Image, useBreakpointValue } from '@chakra-ui/react'
 
 import { Text } from '../ui'
 import { useChainsStore } from '../stores'
@@ -12,6 +12,7 @@ import { ArcTestnetChainId } from '../consts/chainsInfo'
 import defaultTokenIcon from '../assets/images/default-token-icon.png'
 import { getAssetSrc } from '../utils/getAssetSrc'
 import { useWheelxWidgetStyles } from '../../config'
+import { AssetIcon } from '../ui/AssetIcon'
 
 interface Props {
   chainId: number
@@ -186,18 +187,19 @@ export const Network = ({
             backgroundColor={'transparent'}
             cursor="default"
           >
-            <Icon
-              as={DingIcon}
-              fontSize="14px"
+            <AssetIcon
+              src={DingIcon}
+              alt="popular"
               width={'14px'}
               h={'14px'}
-              color="#8A40FF"
               transition="opacity 0.2s ease-in-out"
             />
           </Box>
         )}
       </HStack>
-      {isSelected && <Icon as={ArrowFillRightIcon} />}
+      {isSelected && (
+        <AssetIcon src={ArrowFillRightIcon} alt="selected" boxSize={'16px'} />
+      )}
     </HStack>
   )
 }

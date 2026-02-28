@@ -1,4 +1,4 @@
-import { HStack, VStack, Icon } from '@chakra-ui/react'
+import { HStack, VStack } from '@chakra-ui/react'
 
 import ArrowFillRightIcon from '../assets/icons/arrow-fill-right.svg'
 
@@ -18,6 +18,7 @@ import { useRef, useEffect } from 'react'
 import { useSwapAndBridgeContextStore } from '../SwapAndBridge/hooks'
 import { ArcTestnetChainId } from '../consts/chainsInfo'
 import { useWheelxWidgetStyles } from '../../config'
+import { AssetIcon } from '../ui/AssetIcon'
 
 interface Props {
   popularChains?: ChainInfo[]
@@ -206,7 +207,13 @@ export const DesktopContent = ({
                     Chains with assets
                   </Text>
                 </HStack>
-                {isSelectAll && <Icon as={ArrowFillRightIcon} />}
+                {isSelectAll && (
+                  <AssetIcon
+                    src={ArrowFillRightIcon}
+                    alt="selected"
+                    boxSize={'16px'}
+                  />
+                )}
               </HStack>
             )}
 

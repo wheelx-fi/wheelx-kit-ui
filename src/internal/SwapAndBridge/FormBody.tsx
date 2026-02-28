@@ -1,4 +1,4 @@
-import { VStack, Icon } from '@chakra-ui/react'
+import { VStack } from '@chakra-ui/react'
 import { Fraction } from 'bi-fraction'
 import { useState, useMemo, useCallback, useEffect } from 'react'
 import { parseUnits, zeroAddress } from 'viem'
@@ -45,6 +45,7 @@ import { useChainsStore, useTokensStore } from '../stores'
 import DifferentAddressDialog from './DifferentAddressDialog'
 import { useHyperliquidBalance } from '../api/useHyperliquid'
 import { soneium, base } from 'wagmi/chains'
+import { AssetIcon } from '../ui/AssetIcon'
 
 interface Props {
   getQuote: (params: QuoteRequestWithToTokenDecimals) => Promise<void>
@@ -620,7 +621,9 @@ export const FormBody = ({
           isLoadingFeeData={isLoadingFeeData}
         />
 
-        <Icon
+        <AssetIcon
+          src={SwitchIcon}
+          alt="switch"
           pos={'absolute'}
           top={'50%'}
           left={'50%'}
@@ -634,7 +637,6 @@ export const FormBody = ({
             base: '20px',
             md: '30px'
           }}
-          as={SwitchIcon}
           opacity={toTokenInfo.chain_id === hyperliquidChainId ? '0.5' : '1'}
         />
 

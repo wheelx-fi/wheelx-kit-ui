@@ -1,4 +1,4 @@
-import { Dialog, Portal, VStack, Icon } from '@chakra-ui/react'
+import { Dialog, Portal, VStack } from '@chakra-ui/react'
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
@@ -29,6 +29,7 @@ import {
   useWheelxWidgetConfig,
   useWheelxWidgetStyles
 } from '../../config'
+import { AssetIcon } from '../ui/AssetIcon'
 
 interface SelectTokenModalProps {
   isOpen: boolean
@@ -517,7 +518,7 @@ const SelectTokenModal = ({
               cursor={'pointer'}
               hideBelow={'md'}
             >
-              <Icon boxSize={'40px'} as={BackIcon} />
+              <AssetIcon src={BackIcon} alt="back" boxSize={'40px'} />
             </Dialog.CloseTrigger>
             {/* do not use asChild, the ios 10 will not show the close icon */}
             <Dialog.CloseTrigger
@@ -527,7 +528,7 @@ const SelectTokenModal = ({
               cursor={'pointer'}
               hideFrom={'md'}
             >
-              <Icon boxSize={'24px'} color={'#81728C'} as={CloseIcon} />
+              <AssetIcon src={CloseIcon} alt="close" boxSize={'24px'} />
             </Dialog.CloseTrigger>
           </Dialog.Content>
         </Dialog.Positioner>

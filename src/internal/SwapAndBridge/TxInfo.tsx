@@ -1,7 +1,6 @@
 import {
   Collapsible,
   HStack,
-  Icon,
   VStack,
   ConditionalValue,
   Image,
@@ -30,6 +29,7 @@ import { IoIosFlash } from 'react-icons/io'
 import switchIcon from '../assets/images/switch.png'
 import { getAssetSrc } from '../utils/getAssetSrc'
 import { useWheelxWidgetStyles } from '../../config'
+import { AssetIcon } from '../ui/AssetIcon'
 
 export interface routesItem {
   name: string
@@ -207,11 +207,12 @@ export const TxInfo = ({
                   borderRadius={'full'}
                 />
                 {index !== length - 1 && (
-                  <Icon
-                    as={RoutesIcon}
+                  <AssetIcon
+                    src={RoutesIcon}
+                    alt="route"
                     margin={'0 4px'}
                     boxSize={'12px'}
-                  ></Icon>
+                  />
                 )}
               </HStack>
             )
@@ -270,14 +271,14 @@ export const TxInfo = ({
                 </Text>
               ) : null
             ) : null}
-            <Icon
+            <AssetIcon
+              src={ArrowDownIcon}
+              alt="toggle"
               transition={'all 0.3s ease-in-out'}
               transform={open ? 'rotate(180deg)' : undefined}
               boxSize={'14px'}
               onClick={() => setOpen(!open)}
-            >
-              <ArrowDownIcon />
-            </Icon>
+            />
           </HStack>
         </HStack>
       </Collapsible.Trigger>
@@ -308,7 +309,7 @@ export const TxInfo = ({
                   closeDelay={100}
                   interactive
                 >
-                  <Icon boxSize={'10px'} as={InfoIcon} color={'#c1c8cd'} />
+                  <AssetIcon src={InfoIcon} alt="info" boxSize={'10px'} />
                 </MobileTooltip>
               </HStack>
             </HStack>
@@ -342,9 +343,7 @@ export const TxInfo = ({
                 Estimated Time
               </Text>
               <HStack gap={1}>
-                <Icon boxSize={'14px'}>
-                  <TimeIcon />
-                </Icon>
+                <AssetIcon src={TimeIcon} alt="time" boxSize={'14px'} />
                 <Text variant={textVariant} {...quoteInfoValueStyles}>
                   ~{estimatedTime}s
                 </Text>

@@ -4,7 +4,6 @@ import {
   Image,
   HStack,
   InputGroup,
-  Icon,
   Input
 } from '@chakra-ui/react'
 
@@ -35,6 +34,7 @@ import { AllChainsIcon } from './AllChainsIcon'
 import { useSwapAndBridgeContextStore } from '../SwapAndBridge/hooks'
 import { ArcTestnetChainId } from '../consts/chainsInfo'
 import { useWheelxWidgetStyles } from '../../config'
+import { AssetIcon } from '../ui/AssetIcon'
 
 interface Props {
   popularChains?: ChainInfo[]
@@ -201,8 +201,9 @@ export const MobileContent = memo(function MobileContent({
           >
             <InputGroup
               startElement={
-                <Icon
-                  as={SearchIcon}
+                <AssetIcon
+                  src={SearchIcon}
+                  alt="search"
                   boxSize={{
                     base: '20px',
                     md: '24px'
@@ -253,7 +254,7 @@ export const MobileContent = memo(function MobileContent({
                     />
                   </Box>
                 )}
-                <Icon as={ArrowDownIcon} boxSize={'16px'} />
+                <AssetIcon src={ArrowDownIcon} alt="open chains" boxSize={'16px'} />
               </HStack>
             )}
           </HStack>
@@ -319,7 +320,13 @@ export const MobileContent = memo(function MobileContent({
                     Chains with assets
                   </Text>
                 </HStack>
-                {isSelectAll && <Icon as={ArrowFillRightIcon} />}
+                {isSelectAll && (
+                  <AssetIcon
+                    src={ArrowFillRightIcon}
+                    alt="selected"
+                    boxSize={'16px'}
+                  />
+                )}
               </HStack>
             )}
             <Text
@@ -498,13 +505,13 @@ export const MobileContent = memo(function MobileContent({
       )}
       {/* for mobile close chains list */}
       {isMobileChainsOpen && !hideChainSelector && (
-        <Icon
+        <AssetIcon
+          src={BackIcon}
+          alt="back"
           pos={'absolute'}
           boxSize={'24px'}
-          as={BackIcon}
           left={4}
           top={3.5}
-          color={'#81728C'}
           cursor={'pointer'}
           onClick={() => {
             setIsMobileChainsOpen(false)

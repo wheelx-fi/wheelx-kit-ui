@@ -10,13 +10,13 @@ import {
 } from '@chakra-ui/react'
 
 import { MobileTooltip } from '../ui/tooltip'
-import SettingsIcon from '../assets/icons/settings.svg'
 import InfoIcon from '../assets/icons/info.svg'
 import { useSwapAndBridgeContextStore } from './hooks'
 import { Heading, Text } from '../ui'
 import { slippageStore } from '../utils'
 import { useAccount } from 'wagmi'
 import { useEffect } from 'react'
+import { FiSettings } from 'react-icons/fi'
 import { Props } from './FormTop'
 import { useChainsStore } from '../stores'
 import {
@@ -25,6 +25,7 @@ import {
   crossChainSwapAutoSlippage
 } from './utils/index'
 import { useWheelxWidgetStyles } from '../../config'
+import { AssetIcon } from '../ui/AssetIcon'
 
 export const SlippageSettings = ({ refetchQuote }: Props) => {
   const widgetStyles = useWheelxWidgetStyles()
@@ -110,11 +111,12 @@ export const SlippageSettings = ({ refetchQuote }: Props) => {
       <Popover.Trigger>
         <HStack cursor={'pointer'} {...slippageTriggerStyles}>
           <Icon
+            as={FiSettings}
             boxSize={{
               base: '20px',
               md: '22px'
             }}
-            as={SettingsIcon}
+            color={'#81728C'}
           />
         </HStack>
       </Popover.Trigger>
@@ -169,7 +171,7 @@ export const SlippageSettings = ({ refetchQuote }: Props) => {
                     closeDelay={100}
                     interactive
                   >
-                    <Icon boxSize={'10px'} as={InfoIcon} color={'#c1c8cd'} />
+                    <AssetIcon src={InfoIcon} alt="info" boxSize={'10px'} />
                   </MobileTooltip>
                 </HStack>
               </Popover.Title>

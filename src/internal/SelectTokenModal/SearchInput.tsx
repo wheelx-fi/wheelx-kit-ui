@@ -1,8 +1,9 @@
-import { InputGroup, Input, Icon } from '@chakra-ui/react'
+import { InputGroup, Input } from '@chakra-ui/react'
 import SearchIcon from '../assets/icons/search.svg'
 import { useCallback, useEffect, useState } from 'react'
 import { debounce } from '../SwapAndBridge/utils'
 import { useWheelxWidgetStyles } from '../../config'
+import { AssetIcon } from '../ui/AssetIcon'
 
 interface Props {
   placeholder?: string
@@ -29,8 +30,9 @@ export const SearchInput = ({ placeholder, value, onChange }: Props) => {
   return (
     <InputGroup
       startElement={
-        <Icon
-          as={SearchIcon}
+        <AssetIcon
+          src={SearchIcon}
+          alt="search"
           boxSize={{
             base: '20px',
             md: '24px'

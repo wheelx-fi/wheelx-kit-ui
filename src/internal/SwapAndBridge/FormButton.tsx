@@ -3,7 +3,6 @@
 import {
   VStack,
   Button,
-  Icon,
   ConditionalValue,
   Image,
   HStack
@@ -42,6 +41,7 @@ import { useWheelxWidgetStyles } from '../../config'
 import warningIcon from '../assets/images/jth.png'
 import aiBotGif from '../assets/images/ai_bot.gif'
 import { getAssetSrc } from '../utils/getAssetSrc'
+import { AssetIcon } from '../ui/AssetIcon'
 
 interface Props {
   isFetching: boolean
@@ -525,7 +525,7 @@ export const FormButton = ({
     if (!address) {
       return (
         <Button {...mergedButtonStyles} onClick={openConnectModal}>
-          <Icon w={'24px'} h={'24px'} as={WalletIcon} />
+          <AssetIcon src={WalletIcon} alt="wallet" w={'24px'} h={'24px'} />
           <Heading variant={buttonHeadingVariant} {...buttonTextStyles}>
             Connect Wallet
           </Heading>

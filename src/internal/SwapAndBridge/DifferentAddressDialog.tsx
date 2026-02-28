@@ -4,7 +4,6 @@ import {
   Button,
   Dialog,
   HStack,
-  Icon,
   Input,
   Portal,
   VStack
@@ -18,6 +17,7 @@ import { bottomToaster } from '../ui/toaster'
 import { useDifferentAddressStore } from '../stores/useDifferentAddressStore'
 import { IoClose } from 'react-icons/io5'
 import { useAccount } from 'wagmi'
+import { AssetIcon } from '../ui/AssetIcon'
 
 /**
  *
@@ -241,7 +241,7 @@ const DifferentAddressDialog = ({
               left={'auto'}
               cursor={'pointer'}
             >
-              <Icon boxSize={'24px'} color={'#81728C'} as={CloseIcon} />
+              <AssetIcon src={CloseIcon} alt="close" boxSize={'24px'} />
             </Dialog.CloseTrigger>
           </Dialog.Content>
         </Dialog.Positioner>

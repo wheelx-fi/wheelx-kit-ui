@@ -1,4 +1,4 @@
-import { Button, HStack, Icon, Input, Image } from '@chakra-ui/react'
+import { Button, HStack, Input, Image } from '@chakra-ui/react'
 import { VStack } from '@chakra-ui/react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Fraction } from 'bi-fraction'
@@ -26,6 +26,7 @@ import { useDifferentAddressStore } from '../stores/useDifferentAddressStore'
 import MetamaskIcon from '../assets/icons/metamask.svg'
 import { useHyperliquidBalance } from '../api/useHyperliquid'
 import { useWheelxWidgetStyles } from '../../config'
+import { AssetIcon } from '../ui/AssetIcon'
 
 interface TokenSelectAndInputProps {
   text: 'From' | 'To'
@@ -133,12 +134,13 @@ export const TokenSelectAndInput = ({
         borderRadius={'full'}
       />
     ) : (
-      <Icon
+      <AssetIcon
+        src={MetamaskIcon}
+        alt="metamask"
         boxSize={{
           base: '12px',
           md: '14px'
         }}
-        as={MetamaskIcon}
       />
     )
   }, [connector])
@@ -460,12 +462,13 @@ export const TokenSelectAndInput = ({
           {...widgetStyles.tokenSelector}
         >
           <TokenInfoCom tokenInfo={tokenInfo} />
-          <Icon
+          <AssetIcon
+            src={ArrowDownIcon}
+            alt="open token selector"
             boxSize={{
               base: '20px',
               md: '24px'
             }}
-            as={ArrowDownIcon}
           />
         </HStack>
 
