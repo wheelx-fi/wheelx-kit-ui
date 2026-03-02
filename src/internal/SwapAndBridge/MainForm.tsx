@@ -655,10 +655,16 @@ export const MainForm = () => {
 
     const isFromChanged =
       nextFrom.chain_id !== fromTokenInfo.chain_id ||
-      nextFrom.address !== fromTokenInfo.address
+      nextFrom.address !== fromTokenInfo.address ||
+      nextFrom.decimals !== fromTokenInfo.decimals ||
+      nextFrom.symbol !== fromTokenInfo.symbol ||
+      nextFrom.logo !== fromTokenInfo.logo
     const isToChanged =
       nextTo.chain_id !== toTokenInfo.chain_id ||
-      nextTo.address !== toTokenInfo.address
+      nextTo.address !== toTokenInfo.address ||
+      nextTo.decimals !== toTokenInfo.decimals ||
+      nextTo.symbol !== toTokenInfo.symbol ||
+      nextTo.logo !== toTokenInfo.logo
 
     if (isFromChanged || isToChanged) {
       applyTokenSelection(nextFrom, nextTo)

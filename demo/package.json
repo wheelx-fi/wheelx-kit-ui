@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@rainbow-me/rainbowkit": "^2.2.10",
-    "@wheelx/widget": "file:..",
+    "@wheelx/widget": "link:..",
     "next": "16.1.6",
     "react": "19.2.4",
     "react-dom": "19.2.4"

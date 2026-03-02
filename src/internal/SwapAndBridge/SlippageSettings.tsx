@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   HStack,
-  Icon,
   Input,
   InputGroup,
   Popover,
@@ -16,7 +15,6 @@ import { Heading, Text } from '../ui'
 import { slippageStore } from '../utils'
 import { useAccount } from 'wagmi'
 import { useEffect } from 'react'
-import { FiSettings } from 'react-icons/fi'
 import { Props } from './FormTop'
 import { useChainsStore } from '../stores'
 import {
@@ -26,6 +24,7 @@ import {
 } from './utils/index'
 import { useWheelxWidgetStyles } from '../../config'
 import { AssetIcon } from '../ui/AssetIcon'
+import settingsIcon from '../assets/icons/settings.svg?url'
 
 export const SlippageSettings = ({ refetchQuote }: Props) => {
   const widgetStyles = useWheelxWidgetStyles()
@@ -110,13 +109,13 @@ export const SlippageSettings = ({ refetchQuote }: Props) => {
     <Popover.Root positioning={{ placement: 'bottom-end' }} autoFocus={false}>
       <Popover.Trigger>
         <HStack cursor={'pointer'} {...slippageTriggerStyles}>
-          <Icon
-            as={FiSettings}
+          <AssetIcon
+            src={settingsIcon}
+            alt="settings"
             boxSize={{
               base: '20px',
               md: '22px'
             }}
-            color={'#81728C'}
           />
         </HStack>
       </Popover.Trigger>
