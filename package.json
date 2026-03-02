@@ -1,6 +1,6 @@
 {
   "name": "@wheelx/widget",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Reusable WheelX bridge and swap widget for Next.js applications.",
   "license": "MIT",
   "author": "WheelX",
