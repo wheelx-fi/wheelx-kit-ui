@@ -43,8 +43,8 @@
     "README.md"
   ],
   "scripts": {
-    "clean": "rm -rf dist tsconfig.build.tsbuildinfo",
-    "build": "pnpm run clean && tsc -p tsconfig.build.json && mkdir -p dist/internal && cp -R src/internal/assets dist/internal/assets",
+    "clean": "rimraf dist tsconfig.build.tsbuildinfo",
+    "build": "pnpm run clean && tsc -p tsconfig.build.json && shx mkdir -p dist/internal && shx cp -r src/internal/assets dist/internal/assets",
     "prepare": "pnpm build",
     "prepublishOnly": "pnpm build",
     "typecheck": "tsc -p tsconfig.build.json --noEmit",
@@ -79,6 +79,8 @@
     "@types/node": "^20.19.11",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
+    "rimraf": "^6.0.1",
+    "shx": "^0.4.0",
     "typescript": "^5.9.2"
   }
 }
