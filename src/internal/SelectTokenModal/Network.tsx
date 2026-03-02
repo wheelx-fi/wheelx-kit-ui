@@ -82,10 +82,9 @@ export const Network = ({
   }
 
   useEffect(() => {
-    if (isMobile) {
-      setIsStarVisible(true)
-      setIsPopularIconShow(true)
-    }
+    const shouldShowActions = isMobile === true
+    setIsStarVisible(shouldShowActions)
+    setIsPopularIconShow(shouldShowActions)
   }, [isMobile])
 
   useEffect(() => {
