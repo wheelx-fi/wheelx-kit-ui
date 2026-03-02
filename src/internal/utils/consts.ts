@@ -1,0 +1,2 @@
+export const openFunctionHash =
+  '0x3448bbc2203c608599ad448eeb1007cea04b788ac631f9f558e8dd01a3c27b3d'
