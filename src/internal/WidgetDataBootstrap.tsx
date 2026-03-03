@@ -36,7 +36,17 @@ export function WidgetDataBootstrap({ children }: PropsWithChildren) {
 
   const allChains = useMemo(() => {
     const availableChainIds = new Set(allTokens.map((token) => token.chain_id))
-    return allChainsRaw.filter((chain) => availableChainIds.has(chain.chain_id))
+    const availablePlatformIds = new Set(
+      allTokens
+        .map((token) => token.platform_id)
+        .filter((platformId): platformId is number => platformId != null)
+    )
+
+    return allChainsRaw.filter((chain) => {
+      if (availableChainIds.has(chain.chain_id)) return true
+      if (chain.platform_id == null) return false
+      return availablePlatformIds.has(chain.platform_id)
+    })
   }, [allChainsRaw, allTokens])
 
   useEffect(() => {

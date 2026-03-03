@@ -40,11 +40,13 @@ export interface WidgetAllowedTokensConfig {
 export interface WidgetStyleOverrides {
   formContainer?: Record<string, unknown>
   formTitleText?: Record<string, unknown>
+  formFooterText?: Record<string, unknown>
   sectionContainer?: Record<string, unknown>
   sectionLabelText?: Record<string, unknown>
   tokenSelector?: Record<string, unknown>
   tokenPrimaryText?: Record<string, unknown>
   tokenSecondaryText?: Record<string, unknown>
+  tokenIconBadge?: Record<string, unknown>
   balanceText?: Record<string, unknown>
   recipientBadge?: Record<string, unknown>
   amountInputContainer?: Record<string, unknown>
@@ -73,6 +75,12 @@ export interface WidgetStyleOverrides {
   tokenModalCategoryTab?: Record<string, unknown>
   tokenModalCategoryTabActive?: Record<string, unknown>
   tokenModalCategoryTabText?: Record<string, unknown>
+  differentAddressDialogContent?: Record<string, unknown>
+  differentAddressDialogTitleText?: Record<string, unknown>
+  differentAddressDialogInput?: Record<string, unknown>
+  differentAddressDialogCancelButton?: Record<string, unknown>
+  differentAddressDialogSaveButton?: Record<string, unknown>
+  differentAddressDialogCloseButton?: Record<string, unknown>
   quickHalfButton?: Record<string, unknown>
   quickMaxButton?: Record<string, unknown>
   slippageSettingsTrigger?: Record<string, unknown>

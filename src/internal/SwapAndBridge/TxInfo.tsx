@@ -137,20 +137,20 @@ export const TxInfo = ({
       const outPrice = Number(toAmountToUsd.replace(/,/g, ''))
       if (outPrice > inPrice) {
         return (
-          <Text variant={textVariant} color={'#15003E'} {...quoteInfoValueStyles}>
+          <Text variant={textVariant} {...quoteInfoValueStyles}>
             {`+${(((outPrice - inPrice) / inPrice) * 100).toFixed(2)}%`}
           </Text>
         )
       }
       return (
-        <Text variant={textVariant} color={'#15003E'} {...quoteInfoValueStyles}>
+        <Text variant={textVariant} {...quoteInfoValueStyles}>
           {`-${(((inPrice - outPrice) / inPrice) * 100).toFixed(2)}%`}
         </Text>
       )
     }
     // use usd: (in - out) / in
     return (
-      <Text variant={textVariant} color={'#15003E'} {...quoteInfoValueStyles}>
+      <Text variant={textVariant} {...quoteInfoValueStyles}>
         -
       </Text>
     )
@@ -220,7 +220,7 @@ export const TxInfo = ({
         </HStack>
       )
     }
-    return <Text variant={textVariant}>{router}</Text>
+    return <Text variant={textVariant} {...quoteInfoValueStyles}>{router}</Text>
   }
 
   return (
@@ -235,19 +235,23 @@ export const TxInfo = ({
     >
       <Collapsible.Trigger w={'100%'}>
         <HStack w={'100%'} justify={'space-between'} color={'brand-grey1'}>
-          <HStack
-            gap={1}
-            onClick={handleRateDisplayClick}
-            cursor="pointer"
-            userSelect="none"
-          >
+        <HStack
+          gap={1}
+          onClick={handleRateDisplayClick}
+          cursor="pointer"
+          userSelect="none"
+        >
             <Image
               src={getAssetSrc(switchIcon)}
               alt="switch"
               w={'14px'}
               h={'14px'}
             />
-            <Text variant={textVariant} whiteSpace={'nowrap'}>
+            <Text
+              variant={textVariant}
+              whiteSpace={'nowrap'}
+              {...quoteInfoValueStyles}
+            >
               {isRateReversed
                 ? `1 ${toTokenInfo.symbol} = ${fromAmountInUnit} ${fromTokenInfo.symbol}`
                 : `1 ${fromTokenInfo.symbol} = ${toAmountInUnitStr} ${toTokenInfo.symbol}`}
@@ -332,6 +336,7 @@ export const TxInfo = ({
                   amount={new Fraction(minReceive)}
                   decimals={toTokenInfo.decimals}
                   suffix={toTokenInfo.symbol}
+                  {...quoteInfoValueStyles}
                 />
               </HStack>
             </HStack>

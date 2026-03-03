@@ -6,6 +6,7 @@ import { FaGasPump } from 'react-icons/fa6'
 // import { PiWaveSineFill } from 'react-icons/pi'
 import { TokenInfo } from '../api'
 import { useEffect, useState } from 'react'
+import { useWheelxWidgetStyles } from '../../config'
 
 interface TipsContentProps {
   priceImpact: {
@@ -30,6 +31,10 @@ export const TipsContent = ({
   fromAmountToUsd,
   toAmountToUsd
 }: TipsContentProps) => {
+  const widgetStyles = useWheelxWidgetStyles()
+  const quoteInfoLabelStyles = widgetStyles.quoteInfoLabel || {}
+  const quoteInfoValueStyles = widgetStyles.quoteInfoValue || {}
+  const quoteInfoFreeBadgeStyles = widgetStyles.quoteInfoFreeBadge || {}
   const { chain_id: toChainId /*symbol: toTokenSymbol*/ } = toTokenInfo
   const { chain_id: fromChainId /*symbol: fromTokenSymbol*/ } = fromTokenInfo
   const totalPriceImpact = new Fraction(priceImpact.bridgeFee)
@@ -91,10 +96,15 @@ export const TipsContent = ({
     if (beforeFee && afterFee) {
       return (
         <HStack gap={0}>
-          <Box color={'brand-purple'} marginRight={'3px'}>
+          <Box marginRight={'3px'} {...quoteInfoValueStyles}>
             -${new Fraction(afterFee).toFormat({ decimalPlaces: 2 })}
           </Box>
-          <Box textDecoration={'line-through'} color="gray">
+          <Box
+            textDecoration={'line-through'}
+            color="inherit"
+            opacity={0.7}
+            {...quoteInfoLabelStyles}
+          >
             ${new Fraction(beforeFee).toFormat({ decimalPlaces: 2 })}
           </Box>
           {renderDiscountPercentage()}
@@ -108,13 +118,14 @@ export const TipsContent = ({
     if (priceImpact.discount_percentage) {
       return (
         <Box
-          color={'#000'}
+          color={'inherit'}
           backgroundColor={'#ffd400'}
           width={'30px'}
           borderRadius={'4px'}
           textAlign={'center'}
           fontSize={'10px'}
           marginLeft={'3px'}
+          {...quoteInfoFreeBadgeStyles}
         >
           {priceImpact.discount_percentage}%
         </Box>
@@ -132,21 +143,22 @@ export const TipsContent = ({
           bg={'#00CBB3'}
           p={'3px'}
           borderRadius={'4px'}
+          {...quoteInfoFreeBadgeStyles}
         >
           Free
         </Text>
       )
     }
     return (
-      <Text
-        variant={{
-          base: 'content9',
-          md: 'content8'
-        }}
-        color={'brand-grey1'}
-      >
-        -${new Fraction(fee).toFormat({ decimalPlaces: 2 })}
-      </Text>
+        <Text
+          variant={{
+            base: 'content9',
+            md: 'content8'
+          }}
+          {...quoteInfoValueStyles}
+        >
+          -${new Fraction(fee).toFormat({ decimalPlaces: 2 })}
+        </Text>
     )
   }
 
@@ -167,7 +179,7 @@ export const TipsContent = ({
             base: 'content9',
             md: 'content8'
           }}
-          color={'brand-grey1'}
+          {...quoteInfoValueStyles}
         >
           -
         </Text>
@@ -181,7 +193,7 @@ export const TipsContent = ({
             base: 'content9',
             md: 'content8'
           }}
-          color={'brand-grey1'}
+          {...quoteInfoValueStyles}
         >
           -${sif}
         </Text>
@@ -193,7 +205,7 @@ export const TipsContent = ({
           base: 'content9',
           md: 'content8'
         }}
-        color={'brand-grey1'}
+        {...quoteInfoValueStyles}
       >
         +${-sif}
       </Text>
@@ -296,6 +308,7 @@ export const TipsContent = ({
           pb={2}
           w={'100%'}
           textAlign={'center'}
+          {...quoteInfoValueStyles}
         >
           Total Price Impact: {renderTotalPriceImpact()}
         </Heading>
@@ -305,7 +318,7 @@ export const TipsContent = ({
               base: 'content9',
               md: 'content8'
             }}
-            color={'brand-grey4'}
+            {...quoteInfoLabelStyles}
           >
             Swap Impact
           </Text>
@@ -328,7 +341,7 @@ export const TipsContent = ({
               base: 'content9',
               md: 'content8'
             }}
-            color={'brand-grey4'}
+            {...quoteInfoLabelStyles}
           >
             WheelX Fee
           </Text>
@@ -339,6 +352,7 @@ export const TipsContent = ({
               bg={'#00CBB3'}
               p={'3px'}
               borderRadius={'4px'}
+              {...quoteInfoFreeBadgeStyles}
             >
               Free
             </Text>
@@ -385,6 +399,7 @@ export const TipsContent = ({
         pb={2}
         w={'100%'}
         textAlign={'center'}
+        {...quoteInfoValueStyles}
       >
         Total Price Impact: {renderTotalPriceImpact()}
       </Heading>
@@ -412,7 +427,7 @@ export const TipsContent = ({
             base: 'content9',
             md: 'content8'
           }}
-          color={'brand-grey4'}
+          {...quoteInfoLabelStyles}
         >
           Swap Impact
         </Text>
@@ -435,7 +450,7 @@ export const TipsContent = ({
             base: 'content9',
             md: 'content8'
           }}
-          color={'brand-grey4'}
+          {...quoteInfoLabelStyles}
         >
           Dst. Gas Fee
         </Text>
@@ -452,7 +467,7 @@ export const TipsContent = ({
             base: 'content9',
             md: 'content8'
           }}
-          color={'brand-grey4'}
+          {...quoteInfoLabelStyles}
         >
           WheelX Fee
         </Text>
@@ -463,6 +478,7 @@ export const TipsContent = ({
             bg={'#00CBB3'}
             p={'3px'}
             borderRadius={'4px'}
+            {...quoteInfoFreeBadgeStyles}
           >
             Free
           </Text>

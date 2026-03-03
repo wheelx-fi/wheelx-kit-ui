@@ -38,7 +38,6 @@ import {
   useWheelxWidgetStyles
 } from '../../config'
 import wheelSprites from '../assets/images/wheel-sprites.png'
-import successSprites from '../assets/images/success-sprites.png'
 import ethTokenIcon from '../assets/images/tokens/eth.png'
 import defaultTokenIcon from '../assets/images/default-token-icon.png'
 import { getAssetSrc } from '../utils/getAssetSrc'
@@ -765,6 +764,7 @@ export const MainForm = () => {
                 color={'#81728C'}
                 fontWeight={500}
                 lineHeight={1}
+                {...widgetStyles.formFooterText}
               >
                 Powered by WheelX.fi
               </Text>
@@ -773,11 +773,6 @@ export const MainForm = () => {
               display={'none'}
               src={getAssetSrc(wheelSprites)}
               alt="wheel"
-            />
-            <Image
-              display={'none'}
-              src={getAssetSrc(successSprites)}
-              alt="success"
             />
           </VStack>
         </Box>

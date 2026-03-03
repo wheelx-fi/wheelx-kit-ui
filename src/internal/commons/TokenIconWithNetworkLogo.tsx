@@ -4,6 +4,7 @@ import { TokenInfo } from '../api'
 import { useChainsStore } from '../stores'
 import defaultTokenIcon from '../assets/images/default-token-icon.png'
 import { getAssetSrc } from '../utils/getAssetSrc'
+import { useWheelxWidgetStyles } from '../../config'
 
 interface TokenIconProps extends BoxProps {
   smallW?: ConditionalValue<number | string> | undefined
@@ -43,6 +44,7 @@ export const TokenIconWithNetworkLogo = ({
   },
   ...props
 }: TokenIconProps) => {
+  const widgetStyles = useWheelxWidgetStyles()
   const { name, chain_id, logo, chain_icon } = tokenInfo ?? {}
   const { chains } = useChainsStore()
   const chain = chains?.find((item) => item.chain_id === chain_id)
@@ -77,6 +79,7 @@ export const TokenIconWithNetworkLogo = ({
           borderRadius={'full'}
           border={'1px solid white'}
           bg={'white'}
+          {...widgetStyles.tokenIconBadge}
         />
       ) : null}
     </Box>

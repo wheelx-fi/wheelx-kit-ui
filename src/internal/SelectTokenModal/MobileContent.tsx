@@ -122,6 +122,8 @@ export const MobileContent = memo(function MobileContent({
 }: Props) {
   const widgetStyles = useWheelxWidgetStyles()
   const chainsWithAssetsRowStyles = widgetStyles.tokenModalChainsWithAssetsRow || {}
+  const chainsWithAssetsRowHoverStyles =
+    widgetStyles.tokenModalChainRowHover || { bg: '#E3E4FA' }
   const chainsWithAssetsRowActiveStyles = isSelectAll
     ? widgetStyles.tokenModalChainsWithAssetsRowActive || {}
     : {}
@@ -287,7 +289,7 @@ export const MobileContent = memo(function MobileContent({
                 px={2}
                 mb={4}
                 w={'100%'}
-                _hover={{ bg: '#E3E4FA' }}
+                _hover={chainsWithAssetsRowHoverStyles as any}
                 transition={'all 0.2s ease-in-out'}
                 cursor={'pointer'}
                 gap={1}

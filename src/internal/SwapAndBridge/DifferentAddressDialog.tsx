@@ -9,7 +9,6 @@ import {
   VStack
 } from '@chakra-ui/react'
 import { Heading } from '../ui'
-import CloseIcon from '../assets/icons/close.svg?url'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { isAddress } from 'viem'
@@ -17,7 +16,7 @@ import { bottomToaster } from '../ui/toaster'
 import { useDifferentAddressStore } from '../stores/useDifferentAddressStore'
 import { IoClose } from 'react-icons/io5'
 import { useAccount } from 'wagmi'
-import { AssetIcon } from '../ui/AssetIcon'
+import { useWheelxWidgetStyles } from '../../config'
 
 /**
  *
@@ -45,6 +44,50 @@ const DifferentAddressDialog = ({
   isOpen,
   onClose
 }: DifferentAddressDialogProps) => {
+  const widgetStyles = useWheelxWidgetStyles()
+  const dialogContentStyles =
+    widgetStyles.differentAddressDialogContent ||
+    widgetStyles.tokenModalContent ||
+    {}
+  const dialogTitleStyles =
+    widgetStyles.differentAddressDialogTitleText ||
+    widgetStyles.tokenModalTitleText ||
+    {}
+  const dialogInputStyles =
+    widgetStyles.differentAddressDialogInput ||
+    widgetStyles.tokenModalSearchInput ||
+    {}
+  const dialogInputColor =
+    typeof dialogInputStyles.color === 'string'
+      ? dialogInputStyles.color
+      : 'inherit'
+  const dialogInputBorderColor =
+    typeof dialogInputStyles.borderColor === 'string'
+      ? dialogInputStyles.borderColor
+      : '#B5B5B5'
+  const dialogInputFocusBorderColor =
+    typeof dialogInputStyles._focus === 'object' &&
+    dialogInputStyles._focus &&
+    'borderColor' in dialogInputStyles._focus &&
+    typeof dialogInputStyles._focus.borderColor === 'string'
+      ? dialogInputStyles._focus.borderColor
+      : '#8143FF'
+  const dialogInputPlaceholderStyles =
+    typeof dialogInputStyles._placeholder === 'object'
+      ? dialogInputStyles._placeholder
+      : { color: 'brand-grey3' }
+  const dialogCancelButtonStyles =
+    widgetStyles.differentAddressDialogCancelButton ||
+    widgetStyles.tokenModalCategoryTab ||
+    {}
+  const dialogSaveButtonStyles =
+    widgetStyles.differentAddressDialogSaveButton ||
+    widgetStyles.primaryButton ||
+    {}
+  const dialogCloseButtonStyles =
+    widgetStyles.differentAddressDialogCloseButton ||
+    widgetStyles.slippageSettingsTrigger ||
+    {}
   const [isAddressError, setIsAddressError] = useState(false)
   const { address } = useAccount()
   const [isFocused, setIsFocused] = useState(false)
@@ -148,8 +191,13 @@ const DifferentAddressDialog = ({
       <Portal>
         <Dialog.Backdrop />
         <Dialog.Positioner px={4}>
-          <Dialog.Content w={['100%', '480px']}>
-            <Dialog.Header justifyContent={'center'}>
+          <Dialog.Content
+            w={['100%', '480px']}
+            borderRadius={'24px'}
+            p={0}
+            {...dialogContentStyles}
+          >
+            <Dialog.Header justifyContent={'center'} p={0}>
               <Heading
                 variant={{
                   base: 'heading10',
@@ -157,13 +205,13 @@ const DifferentAddressDialog = ({
                 }}
                 mt={1.5}
                 padding={'20px 0'}
-                color={'#101010'}
                 fontSize={'18px'}
+                {...dialogTitleStyles}
               >
                 To Address
               </Heading>
             </Dialog.Header>
-            <Dialog.Body>
+            <Dialog.Body pb={6}>
               <VStack>
                 <HStack w="100%" marginBottom={'17px'}>
                   <Box margin={'0 15px'} flex={1} position={'relative'}>
@@ -171,17 +219,16 @@ const DifferentAddressDialog = ({
                       placeholder={'Please enter the EVM address'}
                       w={'100%'}
                       paddingLeft={'15px'}
-                      _placeholder={{
-                        color: 'brand-grey3'
-                      }}
+                      {...dialogInputStyles}
+                      _placeholder={dialogInputPlaceholderStyles as any}
                       // defaultValue={address}
-                      color={isAddressError ? 'red' : 'brand-grey1'}
+                      color={isAddressError ? 'red' : dialogInputColor}
                       borderColor={
                         isFocused
-                          ? '#8143FF'
+                          ? dialogInputFocusBorderColor
                           : isAddressError
                             ? 'red'
-                            : '#B5B5B5'
+                            : dialogInputBorderColor
                       }
                       onFocus={handleFocus}
                       onBlur={handleBlur}
@@ -207,31 +254,33 @@ const DifferentAddressDialog = ({
                   </Box>
                 </HStack>
                 <HStack w={'100%'} paddingBottom={'21px'}>
-                  <Button
-                    flex={1}
-                    margin={'0 15px'}
-                    backgroundColor={'#E3E4FA'}
-                    color={'#101010'}
-                    onClick={handleClose}
-                    _hover={{
-                      backgroundColor: '#D5D6F0'
-                    }}
-                  >
-                    Cancel
-                  </Button>
+                    <Button
+                      flex={1}
+                      margin={'0 15px'}
+                      backgroundColor={'#E3E4FA'}
+                      color={'#101010'}
+                      onClick={handleClose}
+                      _hover={{
+                        backgroundColor: '#D5D6F0'
+                      }}
+                      {...dialogCancelButtonStyles}
+                    >
+                      Cancel
+                    </Button>
                   <Button
                     flex={1}
                     margin={'0 15px'}
                     backgroundColor={'#8143FF'}
-                    color={'#fff'}
-                    onClick={onSave}
-                    _hover={{
-                      backgroundColor: '#7035E0'
-                    }}
-                    // disabled={!inputValue.trim()}
-                  >
-                    Save
-                  </Button>
+                      color={'#fff'}
+                      onClick={onSave}
+                      _hover={{
+                        backgroundColor: '#7035E0'
+                      }}
+                      // disabled={!inputValue.trim()}
+                      {...dialogSaveButtonStyles}
+                    >
+                      Save
+                    </Button>
                 </HStack>
               </VStack>
             </Dialog.Body>
@@ -241,7 +290,16 @@ const DifferentAddressDialog = ({
               left={'auto'}
               cursor={'pointer'}
             >
-              <AssetIcon src={CloseIcon} alt="close" boxSize={'24px'} />
+              <Box
+                w={'38px'}
+                h={'38px'}
+                display={'flex'}
+                alignItems={'center'}
+                justifyContent={'center'}
+                {...dialogCloseButtonStyles}
+              >
+                <IoClose size={22} />
+              </Box>
             </Dialog.CloseTrigger>
           </Dialog.Content>
         </Dialog.Positioner>
