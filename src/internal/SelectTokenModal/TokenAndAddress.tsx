@@ -222,6 +222,7 @@ export const TokenAndAddress = ({
               md: 'heading10'
             }}
             color={'brand-grey1'}
+            {...widgetStyles.tokenModalTokenPrimaryText}
           />
 
           <Text
