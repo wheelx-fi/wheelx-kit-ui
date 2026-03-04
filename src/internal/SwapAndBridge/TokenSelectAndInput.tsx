@@ -391,7 +391,9 @@ export const TokenSelectAndInput = ({
               <HStack color={'#15003E'}>
                 <Button
                   variant={'outline'}
-                  minW={'30px'}
+                  minW={0}
+                  minH={'18px'}
+                  px={'6px'}
                   h={{
                     base: '18px'
                   }}
@@ -401,12 +403,18 @@ export const TokenSelectAndInput = ({
                   onClick={() => handleQuickInput('50%')}
                   {...quickHalfButtonStyles}
                 >
-                  <Text variant={'content9'} {...widgetStyles.balanceText}>
+                  <Text
+                    variant={'content9'}
+                    color={'inherit'}
+                    fontFamily={'inherit'}
+                  >
                     50%
                   </Text>
                 </Button>
                 <Button
-                  minW={'30px'}
+                  minW={0}
+                  minH={'18px'}
+                  px={'6px'}
                   h={{
                     base: '18px'
                   }}
@@ -415,7 +423,11 @@ export const TokenSelectAndInput = ({
                   onClick={() => handleQuickInput('Max')}
                   {...quickMaxButtonStyles}
                 >
-                  <Text variant={'content9'} {...widgetStyles.balanceText}>
+                  <Text
+                    variant={'content9'}
+                    color={'inherit'}
+                    fontFamily={'inherit'}
+                  >
                     Max
                   </Text>
                 </Button>

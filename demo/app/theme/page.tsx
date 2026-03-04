@@ -30,8 +30,10 @@ type ThemeState = {
   buttonStart: string
   buttonEnd: string
   buttonText: string
-  quickButtonBackground: string
+  quickHalfButtonBackground: string
+  quickMaxButtonBackground: string
   quickButtonText: string
+  quickMaxButtonText: string
   iconButtonBackground: string
   tokenIconBadgeBackground: string
   tokenIconBadgeBorder: string
@@ -70,8 +72,10 @@ const themePresets: Record<string, ThemeState> = {
     buttonStart: '#38bdf8',
     buttonEnd: '#7c3aed',
     buttonText: '#ffffff',
-    quickButtonBackground: '#dbeafe',
-    quickButtonText: '#1e3a8a',
+    quickHalfButtonBackground: '#f8f5ff',
+    quickMaxButtonBackground: '#7c3aed',
+    quickButtonText: '#7c3aed',
+    quickMaxButtonText: '#ffffff',
     iconButtonBackground: '#ffffff',
     tokenIconBadgeBackground: '#ffffff',
     tokenIconBadgeBorder: '#d8def5',
@@ -108,8 +112,10 @@ const themePresets: Record<string, ThemeState> = {
     buttonStart: '#fb923c',
     buttonEnd: '#f43f5e',
     buttonText: '#fff7ed',
-    quickButtonBackground: '#2d3a5d',
-    quickButtonText: '#f8fafc',
+    quickHalfButtonBackground: '#261c28',
+    quickMaxButtonBackground: '#e85d75',
+    quickButtonText: '#f49aac',
+    quickMaxButtonText: '#fff7ed',
     iconButtonBackground: '#0f1527',
     tokenIconBadgeBackground: '#101726',
     tokenIconBadgeBorder: '#4b5d86',
@@ -146,8 +152,10 @@ const themePresets: Record<string, ThemeState> = {
     buttonStart: '#22c55e',
     buttonEnd: '#06b6d4',
     buttonText: '#041016',
-    quickButtonBackground: '#1e293b',
-    quickButtonText: '#e2e8f0',
+    quickHalfButtonBackground: '#162033',
+    quickMaxButtonBackground: '#2d8faf',
+    quickButtonText: '#7dd3fc',
+    quickMaxButtonText: '#f8fafc',
     iconButtonBackground: '#020617',
     tokenIconBadgeBackground: '#020617',
     tokenIconBadgeBorder: '#475569',
@@ -449,16 +457,24 @@ function buildWidgetStyles(theme: ThemeState): WidgetStyleOverrides {
       fontFamily: theme.fontFamily
     },
     quickHalfButton: {
-      backgroundColor: theme.quickButtonBackground,
+      backgroundColor: theme.quickHalfButtonBackground,
       color: theme.quickButtonText,
       border: '1px solid',
-      borderColor: theme.inputBorder
+      borderColor: theme.quickButtonText,
+      minWidth: 0,
+      paddingInline: '6px',
+      boxShadow: 'none',
+      fontFamily: theme.fontFamily
     },
     quickMaxButton: {
-      backgroundColor: theme.quickButtonBackground,
-      color: theme.quickButtonText,
+      backgroundColor: theme.quickMaxButtonBackground,
+      color: theme.quickMaxButtonText,
       border: '1px solid',
-      borderColor: theme.inputBorder
+      borderColor: theme.quickMaxButtonBackground,
+      minWidth: 0,
+      paddingInline: '6px',
+      boxShadow: 'none',
+      fontFamily: theme.fontFamily
     },
     slippageSettingsTrigger: {
       backgroundColor: theme.iconButtonBackground,
@@ -475,9 +491,9 @@ function buildWidgetStyles(theme: ThemeState): WidgetStyleOverrides {
       color: theme.textPrimary
     },
     slippageAutoButton: {
-      backgroundColor: theme.quickButtonBackground,
+      backgroundColor: theme.quickHalfButtonBackground,
       color: theme.quickButtonText,
-      borderColor: theme.inputBorder
+      borderColor: theme.quickButtonText
     },
     slippageCustomInput: {
       backgroundColor: theme.inputBackground,
@@ -979,14 +995,28 @@ function ThemePlayground() {
                 onChange={(value) => updateTheme('buttonText', value)}
               />
               <ColorField
-                label="Quick Button"
-                value={theme.quickButtonBackground}
-                onChange={(value) => updateTheme('quickButtonBackground', value)}
+                label="Quick 50% Button"
+                value={theme.quickHalfButtonBackground}
+                onChange={(value) =>
+                  updateTheme('quickHalfButtonBackground', value)
+                }
               />
               <ColorField
-                label="Quick Button Text"
+                label="Quick Max Button"
+                value={theme.quickMaxButtonBackground}
+                onChange={(value) =>
+                  updateTheme('quickMaxButtonBackground', value)
+                }
+              />
+              <ColorField
+                label="Quick 50% Text"
                 value={theme.quickButtonText}
                 onChange={(value) => updateTheme('quickButtonText', value)}
+              />
+              <ColorField
+                label="Quick Max Text"
+                value={theme.quickMaxButtonText}
+                onChange={(value) => updateTheme('quickMaxButtonText', value)}
               />
               <ColorField
                 label="Utility Button Surface"
