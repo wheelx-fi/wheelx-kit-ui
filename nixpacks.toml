@@ -8,4 +8,4 @@ cmds = ["corepack enable", "pnpm install --frozen-lockfile"]
 cmds = ["pnpm demo:build"]
 
 [start]
-cmd = "pnpm --dir demo start -- -p ${PORT:-3000}"
+cmd = "pnpm --dir demo exec next start -p ${PORT:-3000}"
