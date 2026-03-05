@@ -1,4 +1,4 @@
-import { HStack, Spinner, VStack, Image } from '@chakra-ui/react'
+import { HStack, Spinner, VStack, Image, Box } from '@chakra-ui/react'
 import { TokenAndAddress } from './TokenAndAddress'
 import { TokenInfo, TokenInfoWithBalance, TokenBalance } from '../api'
 import { Text } from '../ui'
@@ -23,7 +23,6 @@ import { useChainsStore } from '../stores'
 import noDataImage from '../assets/images/no_data.png'
 import { getAssetSrc } from '../utils/getAssetSrc'
 import { useWheelxWidgetStyles } from '../../config'
-import { AssetIcon } from '../ui/AssetIcon'
 
 const deduplicateByAddressAndChainId = (tokens: TokenInfo[]): TokenInfo[] => {
   const addressMap = new Map<string, TokenInfo>()
@@ -37,7 +36,11 @@ const deduplicateByAddressAndChainId = (tokens: TokenInfo[]): TokenInfo[] => {
   })
 }
 
-const tabList = [
+const tabList: Array<{
+  name: string
+  type: string
+  icon: string
+}> = [
   {
     name: 'All',
     type: 'all',
@@ -335,8 +338,24 @@ export const TokenList = ({
               {...categoryTabStyles}
               {...(currentTab === item.type ? categoryTabActiveStyles : {})}
             >
-              <AssetIcon src={item.icon} alt={item.name} boxSize={'14px'} />
-              <Text {...widgetStyles.tokenModalCategoryTabText}>
+              <Box
+                boxSize={'14px'}
+                bg={'currentColor'}
+                style={{
+                  WebkitMaskImage: `url(${getAssetSrc(item.icon)})`,
+                  maskImage: `url(${getAssetSrc(item.icon)})`,
+                  WebkitMaskRepeat: 'no-repeat',
+                  maskRepeat: 'no-repeat',
+                  WebkitMaskPosition: 'center',
+                  maskPosition: 'center',
+                  WebkitMaskSize: 'contain',
+                  maskSize: 'contain'
+                }}
+              />
+              <Text
+                {...widgetStyles.tokenModalCategoryTabText}
+                color={'inherit'}
+              >
                 {item.name}
               </Text>
             </HStack>

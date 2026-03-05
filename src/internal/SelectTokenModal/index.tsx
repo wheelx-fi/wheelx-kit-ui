@@ -1,4 +1,4 @@
-import { Dialog, Portal, VStack } from '@chakra-ui/react'
+import { Dialog, Portal, VStack, Box } from '@chakra-ui/react'
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
@@ -10,7 +10,6 @@ import {
 
 import { Heading } from '../ui'
 import BackIcon from '../assets/icons/back.svg?url'
-
 import {
   useChainsAndTokensForSelect,
   useUserHasSelectedFromNetwork,
@@ -30,6 +29,7 @@ import {
   useWheelxWidgetStyles
 } from '../../config'
 import { AssetIcon } from '../ui/AssetIcon'
+import { getAssetSrc } from '../utils/getAssetSrc'
 
 interface SelectTokenModalProps {
   isOpen: boolean
@@ -47,6 +47,11 @@ const SelectTokenModal = ({
   const { mode, getAllowedChainIds, getAllowedTokens, isTokenAllowed } =
     useWheelxWidgetConfig()
   const widgetStyles = useWheelxWidgetStyles()
+  const modalIconColor =
+    (widgetStyles.tokenModalTitleText as { color?: string } | undefined)
+      ?.color ??
+    (widgetStyles.tokenModalContent as { color?: string } | undefined)?.color ??
+    '#81728C'
   const { address } = useAccount()
   const { fromTokenInfo, toTokenInfo, isShortLink, shortLink } =
     useSwapAndBridgeContextStore()
@@ -515,11 +520,24 @@ const SelectTokenModal = ({
               left={4}
               top={3.5}
               right={'auto'}
-              color={'#81728C'}
+              color={modalIconColor}
               cursor={'pointer'}
               hideBelow={'md'}
             >
-              <AssetIcon src={BackIcon} alt="back" boxSize={'40px'} />
+              <Box
+                boxSize={'40px'}
+                bg={'currentColor'}
+                style={{
+                  WebkitMaskImage: `url(${getAssetSrc(BackIcon)})`,
+                  maskImage: `url(${getAssetSrc(BackIcon)})`,
+                  WebkitMaskRepeat: 'no-repeat',
+                  maskRepeat: 'no-repeat',
+                  WebkitMaskPosition: 'center',
+                  maskPosition: 'center',
+                  WebkitMaskSize: 'contain',
+                  maskSize: 'contain'
+                }}
+              />
             </Dialog.CloseTrigger>
             {/* do not use asChild, the ios 10 will not show the close icon */}
             <Dialog.CloseTrigger

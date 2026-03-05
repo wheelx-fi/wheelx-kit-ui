@@ -35,6 +35,7 @@ import { useSwapAndBridgeContextStore } from '../SwapAndBridge/hooks'
 import { ArcTestnetChainId } from '../consts/chainsInfo'
 import { useWheelxWidgetStyles } from '../../config'
 import { AssetIcon } from '../ui/AssetIcon'
+import { getAssetSrc } from '../utils/getAssetSrc'
 
 interface Props {
   popularChains?: ChainInfo[]
@@ -121,6 +122,11 @@ export const MobileContent = memo(function MobileContent({
   setDisableArcTestnetLimit
 }: Props) {
   const widgetStyles = useWheelxWidgetStyles()
+  const modalIconColor =
+    (widgetStyles.tokenModalTitleText as { color?: string } | undefined)
+      ?.color ??
+    (widgetStyles.tokenModalContent as { color?: string } | undefined)?.color ??
+    '#81728C'
   const chainsWithAssetsRowStyles = widgetStyles.tokenModalChainsWithAssetsRow || {}
   const chainsWithAssetsRowHoverStyles =
     widgetStyles.tokenModalChainRowHover || { bg: '#E3E4FA' }
@@ -507,14 +513,23 @@ export const MobileContent = memo(function MobileContent({
       )}
       {/* for mobile close chains list */}
       {isMobileChainsOpen && !hideChainSelector && (
-        <AssetIcon
-          src={BackIcon}
-          alt="back"
+        <Box
+          bg={modalIconColor}
           pos={'absolute'}
           boxSize={'24px'}
           left={4}
           top={3.5}
           cursor={'pointer'}
+          style={{
+            WebkitMaskImage: `url(${getAssetSrc(BackIcon)})`,
+            maskImage: `url(${getAssetSrc(BackIcon)})`,
+            WebkitMaskRepeat: 'no-repeat',
+            maskRepeat: 'no-repeat',
+            WebkitMaskPosition: 'center',
+            maskPosition: 'center',
+            WebkitMaskSize: 'contain',
+            maskSize: 'contain'
+          }}
           onClick={() => {
             setIsMobileChainsOpen(false)
             if (userBalances && userBalances.length > 0) {
