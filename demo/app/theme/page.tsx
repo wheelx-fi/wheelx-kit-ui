@@ -731,7 +731,9 @@ function buildWidgetStyles(theme: ThemeState): WidgetStyleOverrides {
 }
 
 function ThemePlayground() {
-  const [themeKey, setThemeKey] = useState<'custom' | keyof typeof themePresets>(
+  const [themeKey, setThemeKey] = useState<
+    'default' | 'custom' | keyof typeof themePresets
+  >(
     'aurora'
   )
   const [theme, setTheme] = useState<ThemeState>(themePresets.aurora)
@@ -743,12 +745,15 @@ function ThemePlayground() {
   const [copyState, setCopyState] = useState<'idle' | 'copied'>('idle')
 
   const widgetConfig = useMemo<WheelxWidgetConfig>(
-    () => ({
-      ...demoWidgetConfig,
-      referralCode: referralCode.trim() || undefined,
-      styles: buildWidgetStyles(theme)
-    }),
-    [referralCode, theme]
+    () =>
+      themeKey === 'default'
+        ? {}
+        : {
+            ...demoWidgetConfig,
+            referralCode: referralCode.trim() || undefined,
+            styles: buildWidgetStyles(theme)
+          },
+    [referralCode, theme, themeKey]
   )
 
   const generatedConfig = useMemo(
@@ -764,6 +769,10 @@ function ThemePlayground() {
   const applyPreset = (key: keyof typeof themePresets) => {
     setThemeKey(key)
     setTheme(themePresets[key])
+  }
+
+  const applyDefaultPreset = () => {
+    setThemeKey('default')
   }
 
   const updateTheme = <K extends keyof ThemeState>(key: K, value: ThemeState[K]) => {
@@ -893,6 +902,21 @@ function ThemePlayground() {
                 gap: 10
               }}
             >
+              <button
+                onClick={applyDefaultPreset}
+                style={{
+                  padding: '11px 16px',
+                  borderRadius: 999,
+                  border: `1px solid ${themeKey === 'default' ? '#7dd3fc' : '#24324c'}`,
+                  background: themeKey === 'default' ? '#e0f2fe' : '#0f1b31',
+                  color: themeKey === 'default' ? '#082f49' : '#e2e8f0',
+                  fontWeight: 800,
+                  cursor: 'pointer',
+                  textTransform: 'capitalize'
+                }}
+              >
+                Default
+              </button>
               {Object.keys(themePresets).map((key) => {
                 const active = themeKey === key
                 return (
