@@ -111,6 +111,7 @@ export interface WidgetStyleOverrides {
 
 export interface WheelxWidgetConfig {
   mode?: WidgetMode
+  referralCode?: string
   networks?: WidgetNetworksConfig
   defaultTokens?: WidgetDefaultTokensConfig
   allowedTokens?: WidgetAllowedTokensConfig
@@ -119,6 +120,7 @@ export interface WheelxWidgetConfig {
 
 interface NormalizedWheelxWidgetConfig {
   mode: WidgetMode
+  referralCode: string | null
   networks: {
     from: number[] | null
     to: number[] | null
@@ -133,6 +135,7 @@ interface NormalizedWheelxWidgetConfig {
 
 const defaultConfig: NormalizedWheelxWidgetConfig = {
   mode: 'bridge-and-swap',
+  referralCode: null,
   networks: {
     from: null,
     to: null
@@ -159,6 +162,8 @@ function normalizeConfig(
   config?: WheelxWidgetConfig
 ): NormalizedWheelxWidgetConfig {
   const mode = config?.mode ?? defaultConfig.mode
+  const rawReferralCode = config?.referralCode?.trim()
+  const referralCode = rawReferralCode ? rawReferralCode : null
   let from = normalizeChainFilter(config?.networks?.from)
   let to = normalizeChainFilter(config?.networks?.to)
 
@@ -212,6 +217,7 @@ function normalizeConfig(
 
   return {
     mode,
+    referralCode,
     networks: {
       from,
       to

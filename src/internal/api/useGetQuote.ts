@@ -12,6 +12,7 @@ export interface QuoteRequest {
   to_address: string
   amount: string
   slippage?: number
+  affiliation?: string
   to_platform_id: number
   // quote_only: boolean
 }

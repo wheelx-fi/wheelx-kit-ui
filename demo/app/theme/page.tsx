@@ -735,14 +735,20 @@ function ThemePlayground() {
     'aurora'
   )
   const [theme, setTheme] = useState<ThemeState>(themePresets.aurora)
+  const [referralCode, setReferralCode] = useState(
+    typeof demoWidgetConfig.referralCode === 'string'
+      ? demoWidgetConfig.referralCode
+      : ''
+  )
   const [copyState, setCopyState] = useState<'idle' | 'copied'>('idle')
 
   const widgetConfig = useMemo<WheelxWidgetConfig>(
     () => ({
       ...demoWidgetConfig,
+      referralCode: referralCode.trim() || undefined,
       styles: buildWidgetStyles(theme)
     }),
-    [theme]
+    [referralCode, theme]
   )
 
   const generatedConfig = useMemo(
@@ -856,6 +862,30 @@ function ThemePlayground() {
             title="Configure"
             description="Adjust the theme here. Presets are part of the configuration area."
           >
+            <div
+              style={{
+                display: 'grid',
+                gap: 8
+              }}
+            >
+              <TextField
+                label="Referral Code"
+                value={referralCode}
+                onChange={setReferralCode}
+              />
+              <p style={{ margin: 0, color: '#94a3b8', fontSize: 13 }}>
+                Find your code at{' '}
+                <a
+                  href="https://affiliate.wheelx.fi/"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  style={{ color: '#7dd3fc', textDecoration: 'none' }}
+                >
+                  affiliate.wheelx.fi
+                </a>
+                .
+              </p>
+            </div>
             <div
               style={{
                 display: 'flex',

@@ -63,7 +63,7 @@ export interface QuoteInfo {
 export interface QuoteRequestWithToTokenDecimals extends QuoteRequest {
   toTokenDecimals: number
   isAutoRefetch?: boolean
-  affiliation?: string | null
+  affiliation?: string
 }
 
 export const initialQuoteInfo: QuoteInfo = {
@@ -122,7 +122,14 @@ export const MainForm = () => {
   const { tokens } = useTokensStore()
   const widgetStyles = useWheelxWidgetStyles()
   const widgetConfig = useWheelxWidgetConfig()
-  const { mode, networks, defaultTokens, getAllowedTokens, isTokenAllowed } =
+  const {
+    mode,
+    referralCode,
+    networks,
+    defaultTokens,
+    getAllowedTokens,
+    isTokenAllowed
+  } =
     widgetConfig
   const fromAllowedChainIds = networks.from
   const toAllowedChainIds = networks.to
@@ -276,6 +283,22 @@ export const MainForm = () => {
     }
   }, [])
 
+  const resolveAffiliation = useCallback(
+    (inputAffiliation?: string | null): string | undefined => {
+      const normalizedReferralCode = referralCode?.trim()
+      if (normalizedReferralCode) {
+        return normalizedReferralCode
+      }
+      const normalizedInputAffiliation = inputAffiliation?.trim()
+      if (normalizedInputAffiliation) {
+        return normalizedInputAffiliation
+      }
+      const vCode = extractVPathSegment()?.trim()
+      return vCode ? vCode : undefined
+    },
+    [referralCode]
+  )
+
   const getQuote = useCallback(
     async ({
       toTokenDecimals,
@@ -296,7 +319,11 @@ export const MainForm = () => {
           clearTimeout(timerRef.current)
           timerRef.current = null
         }
-        const res = await mutateAsync({ ...params })
+        const affiliation = resolveAffiliation(params.affiliation)
+        const res = await mutateAsync({
+          ...params,
+          affiliation
+        })
         if (res) {
           const toAmount = formatTokenAmount({
             amount: new Fraction(res.amount_out),
@@ -360,14 +387,14 @@ export const MainForm = () => {
         })
       }
     },
-    [mutateAsync, setToAmount, startLoading]
+    [mutateAsync, resolveAffiliation, setToAmount, startLoading]
   )
 
   const refetchQuote = useCallback(
     async ({ slippageValue, isAutoSlippage }: RefetchQuoteParams = {}) => {
       startLoading()
       if (!fromAmount || !address) return
-      const vCode = extractVPathSegment()
+      const vCode = extractVPathSegment() || undefined
       await getQuote({
         from_chain: fromTokenInfo.chain_id,
         to_chain: toTokenInfo.chain_id,
@@ -438,7 +465,7 @@ export const MainForm = () => {
   useEffect(() => {
     async function _getQuote() {
       if (!address || !fromAmount) return
-      const vCode = extractVPathSegment()
+      const vCode = extractVPathSegment() || undefined
       await getQuote({
         from_chain: fromTokenInfo.chain_id,
         to_chain: toTokenInfo.chain_id,

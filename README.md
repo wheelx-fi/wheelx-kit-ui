@@ -102,6 +102,7 @@ Example:
 ```tsx
 const config: WheelxWidgetConfig = {
   mode: 'bridge-and-swap',
+  referralCode: 'your-affiliate-code',
   networks: {
     from: [1, 8453],
     to: [8453, 137]
@@ -151,6 +152,20 @@ Notes:
 
 - `bridge-and-swap` is the default.
 - In `swap` mode, the widget normalizes `networks.from` and `networks.to` to the shared chain set when both are provided.
+
+#### `referralCode`
+
+Adds your referral code to quote requests.
+
+```ts
+referralCode?: string
+```
+
+Rules:
+
+- When set, every quote request includes `affiliation` in the request body.
+- The value is trimmed before use.
+- You can get your code from `https://affiliate.wheelx.fi/`.
 
 #### `networks`
 

@@ -532,7 +532,7 @@ export const FormBody = ({
       to_token: _toTokenInfo.address
     })
 
-    const vCode = extractVPathSegment()
+    const vCode = extractVPathSegment() || undefined
     // console.log('##########vCode#########:', vCode)
     await getQuote({
       from_chain: _fromTokenInfo.chain_id,
@@ -552,7 +552,7 @@ export const FormBody = ({
   const handleFromAmountChange = async (value: string) => {
     setFromAmount(value)
     setToAmount('')
-    const vCode = extractVPathSegment()
+    const vCode = extractVPathSegment() || undefined
     // setQuoteInfo({ ...initialQuoteInfo, isFetching: true })
     await getQuote({
       from_chain: fromTokenInfo.chain_id,
