@@ -174,6 +174,19 @@ const themePresets: Record<string, ThemeState> = {
   }
 }
 
+const emptyThemeState: ThemeState = Object.fromEntries(
+  Object.keys(themePresets.aurora).map((key) => [key, ''])
+) as ThemeState
+
+const sparseStyleKeysToStrip = new Set([
+  'border',
+  'boxShadow',
+  'paddingInline',
+  'minWidth',
+  'minHeight',
+  'borderRadius'
+])
+
 const fontOptions = [
   { label: 'Geist Sans', value: 'var(--font-geist-sans), sans-serif' },
   { label: 'Georgia', value: 'Georgia, serif' },
@@ -730,6 +743,61 @@ function buildWidgetStyles(theme: ThemeState): WidgetStyleOverrides {
   }
 }
 
+function compactStyleObject(
+  style: Record<string, unknown>
+): Record<string, unknown> {
+  const result: Record<string, unknown> = {}
+
+  for (const [key, rawValue] of Object.entries(style)) {
+    if (rawValue === '' || rawValue === null || rawValue === undefined) {
+      continue
+    }
+
+    if (
+      typeof rawValue === 'object' &&
+      rawValue !== null &&
+      !Array.isArray(rawValue)
+    ) {
+      const compactedNested = compactStyleObject(
+        rawValue as Record<string, unknown>
+      )
+      if (Object.keys(compactedNested).length > 0) {
+        result[key] = compactedNested
+      }
+      continue
+    }
+
+    if (sparseStyleKeysToStrip.has(key)) {
+      continue
+    }
+
+    result[key] = rawValue
+  }
+
+  return result
+}
+
+function buildSparseWidgetStyles(theme: ThemeState): WidgetStyleOverrides {
+  const fullStyles = buildWidgetStyles(theme)
+  const sparseStyles: WidgetStyleOverrides = {}
+
+  for (const [slot, rawStyle] of Object.entries(fullStyles)) {
+    if (
+      !rawStyle ||
+      typeof rawStyle !== 'object' ||
+      Array.isArray(rawStyle)
+    ) {
+      continue
+    }
+    const compacted = compactStyleObject(rawStyle as Record<string, unknown>)
+    if (Object.keys(compacted).length > 0) {
+      ;(sparseStyles as Record<string, unknown>)[slot] = compacted
+    }
+  }
+
+  return sparseStyles
+}
+
 function ThemePlayground() {
   const [themeKey, setThemeKey] = useState<
     'default' | 'custom' | keyof typeof themePresets
@@ -737,6 +805,7 @@ function ThemePlayground() {
     'aurora'
   )
   const [theme, setTheme] = useState<ThemeState>(themePresets.aurora)
+  const [isSparseMode, setIsSparseMode] = useState(false)
   const [referralCode, setReferralCode] = useState(
     typeof demoWidgetConfig.referralCode === 'string'
       ? demoWidgetConfig.referralCode
@@ -745,15 +814,25 @@ function ThemePlayground() {
   const [copyState, setCopyState] = useState<'idle' | 'copied'>('idle')
 
   const widgetConfig = useMemo<WheelxWidgetConfig>(
-    () =>
-      themeKey === 'default'
-        ? {}
-        : {
-            ...demoWidgetConfig,
-            referralCode: referralCode.trim() || undefined,
-            styles: buildWidgetStyles(theme)
-          },
-    [referralCode, theme, themeKey]
+    () => {
+      const trimmedReferralCode = referralCode.trim()
+      if (themeKey === 'default') {
+        return trimmedReferralCode
+          ? { referralCode: trimmedReferralCode }
+          : {}
+      }
+
+      const styles = isSparseMode
+        ? buildSparseWidgetStyles(theme)
+        : buildWidgetStyles(theme)
+
+      return {
+        ...demoWidgetConfig,
+        referralCode: trimmedReferralCode || undefined,
+        ...(Object.keys(styles).length ? { styles } : {})
+      }
+    },
+    [isSparseMode, referralCode, theme, themeKey]
   )
 
   const generatedConfig = useMemo(
@@ -769,10 +848,13 @@ function ThemePlayground() {
   const applyPreset = (key: keyof typeof themePresets) => {
     setThemeKey(key)
     setTheme(themePresets[key])
+    setIsSparseMode(false)
   }
 
   const applyDefaultPreset = () => {
     setThemeKey('default')
+    setTheme({ ...emptyThemeState })
+    setIsSparseMode(true)
   }
 
   const updateTheme = <K extends keyof ThemeState>(key: K, value: ThemeState[K]) => {
@@ -843,8 +925,10 @@ function ThemePlayground() {
               style={{
                 borderRadius: 28,
                 padding: '28px clamp(14px, 3vw, 28px)',
-                background: theme.pageBackground,
-                border: `1px solid ${theme.previewCardBorder}`,
+                background:
+                  theme.pageBackground ||
+                  'radial-gradient(circle at 20% 10%, #fef3c7 0%, #dbeafe 35%, #f5d0fe 68%, #ecfeff 100%)',
+                border: `1px solid ${theme.previewCardBorder || '#1f2b43'}`,
                 minHeight: 760,
                 display: 'flex',
                 alignItems: 'center',
