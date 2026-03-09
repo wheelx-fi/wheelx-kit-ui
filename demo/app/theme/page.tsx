@@ -489,14 +489,6 @@ function buildWidgetStyles(theme: ThemeState): WidgetStyleOverrides {
       boxShadow: 'none',
       fontFamily: theme.fontFamily
     },
-    slippageSettingsTrigger: {
-      backgroundColor: theme.iconButtonBackground,
-      border: '1px solid',
-      borderColor: theme.inputBorder,
-      borderRadius: '10px',
-      paddingInline: '6px',
-      minHeight: '30px'
-    },
     slippagePopoverContent: {
       backgroundColor: theme.widgetBackground,
       border: '1px solid',
