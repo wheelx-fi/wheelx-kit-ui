@@ -72,6 +72,11 @@ pnpm demo:build
 
 `pnpm demo:dev` rebuilds the package first, so the demo stays aligned with the current source tree.
 
+### 3. Browse Online
+
+- Live demo: `https://widget.wheelx.fi/`
+- Theme page: `https://widget.wheelx.fi/theme`
+
 ## Theme Page
 
 The repository includes a theme playground at:

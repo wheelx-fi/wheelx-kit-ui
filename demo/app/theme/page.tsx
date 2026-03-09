@@ -885,7 +885,7 @@ function ThemePlayground() {
                   onChange={setReferralCode}
                 />
                 <p style={{ margin: 0, color: '#94a3b8', fontSize: 13 }}>
-                  Find your code at{' '}
+                  Get your code from{' '}
                   <a
                     href="https://affiliate.wheelx.fi/"
                     target="_blank"
@@ -894,7 +894,7 @@ function ThemePlayground() {
                   >
                     affiliate.wheelx.fi
                   </a>
-                  .
+                  {' '}and earn up to 15% commission.
                 </p>
               </div>
               <div

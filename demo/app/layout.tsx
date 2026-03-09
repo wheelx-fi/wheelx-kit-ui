@@ -15,7 +15,30 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "WheelX Widget Demo",
-  description: "Demo for @wheelx/widget",
+  description:
+    "One-click integration of Bridge & Swap, with 100% support for custom configuration.",
+  keywords: [
+    "WheelX",
+    "Widget",
+    "wheelx api",
+    "wheelx sdk",
+    "wheelx Widget",
+    "bridge",
+    "swap",
+    "solana",
+    "ethereum",
+    "bnbchain",
+    "base",
+    "aggregator",
+    "soneium",
+    "polygon",
+    "polymarket",
+    "linea",
+    "ink",
+    "hyperevm",
+    "hyperliquid",
+    "predict market",
+  ],
 };
 
 export default function RootLayout({

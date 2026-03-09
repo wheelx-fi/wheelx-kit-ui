@@ -40,6 +40,7 @@ import {
 import wheelSprites from '../assets/images/wheel-sprites.png'
 import ethTokenIcon from '../assets/images/tokens/eth.png'
 import defaultTokenIcon from '../assets/images/default-token-icon.png'
+import productLogo from '../assets/images/product-logo.png'
 import { getAssetSrc } from '../utils/getAssetSrc'
 import { Text } from '../ui'
 import { zeroAddress } from 'viem'
@@ -121,6 +122,11 @@ export const MainForm = () => {
   const { chains } = useChainsStore()
   const { tokens } = useTokensStore()
   const widgetStyles = useWheelxWidgetStyles()
+  const footerTextStyles = widgetStyles.formFooterText || {}
+  const footerTextColor =
+    typeof footerTextStyles.color === 'string'
+      ? footerTextStyles.color
+      : '#81728C'
   const widgetConfig = useWheelxWidgetConfig()
   const {
     mode,
@@ -786,15 +792,46 @@ export const MainForm = () => {
                 opacity: 0.8
               }}
             >
-              <Text
-                variant={'content9'}
-                color={'#81728C'}
-                fontWeight={500}
-                lineHeight={1}
-                {...widgetStyles.formFooterText}
-              >
-                Powered by WheelX.fi
-              </Text>
+              <Box display={'flex'} alignItems={'center'} gap={1.5}>
+                <Text
+                  variant={'content8'}
+                  color={footerTextColor}
+                  fontWeight={500}
+                  fontSize={{
+                    base: '13px',
+                    md: '14px'
+                  }}
+                  lineHeight={1.15}
+                  {...footerTextStyles}
+                >
+                  Powered by
+                </Text>
+                <Box
+                  boxSize={{
+                    base: '14px',
+                    md: '16px'
+                  }}
+                  flexShrink={0}
+                  backgroundColor={footerTextColor}
+                  maskImage={`url(${getAssetSrc(productLogo)})`}
+                  maskPosition={'center center'}
+                  maskRepeat={'no-repeat'}
+                  maskSize={'contain'}
+                />
+                <Text
+                  variant={'content8'}
+                  color={footerTextColor}
+                  fontWeight={500}
+                  fontSize={{
+                    base: '13px',
+                    md: '14px'
+                  }}
+                  lineHeight={1.15}
+                  {...footerTextStyles}
+                >
+                  WheelX.fi
+                </Text>
+              </Box>
             </ChakraLink>
             <Image
               display={'none'}
