@@ -54,7 +54,7 @@ type ThemeState = {
 const themePresets: Record<string, ThemeState> = {
   aurora: {
     pageBackground:
-      'radial-gradient(circle at 20% 10%, #fef3c7 0%, #dbeafe 35%, #f5d0fe 68%, #ecfeff 100%)',
+      'linear-gradient(160deg, #edf3ff 0%, #e4ebff 52%, #ece7ff 100%)',
     previewCardBackground: 'rgba(255, 255, 255, 0.66)',
     previewCardBorder: '#d6d8ff',
     widgetBackground: '#fbfbff',
@@ -94,9 +94,9 @@ const themePresets: Record<string, ThemeState> = {
   },
   ember: {
     pageBackground:
-      'radial-gradient(circle at 15% 20%, #2f1320 0%, #141626 42%, #072b36 100%)',
+      'linear-gradient(160deg, #131a2d 0%, #141f35 48%, #0f2c36 100%)',
     previewCardBackground: 'rgba(15, 18, 31, 0.76)',
-    previewCardBorder: '#5c3350',
+    previewCardBorder: '#121212',
     widgetBackground: '#161b2d',
     widgetBorder: '#31405f',
     sectionBackground: '#202842',
@@ -136,7 +136,7 @@ const themePresets: Record<string, ThemeState> = {
     pageBackground:
       'radial-gradient(circle at 10% 10%, #1d2638 0%, #0f172a 40%, #020617 100%)',
     previewCardBackground: 'rgba(7, 11, 23, 0.78)',
-    previewCardBorder: '#2d3c59',
+    previewCardBorder: '#182234',
     widgetBackground: '#0f172a',
     widgetBorder: '#334155',
     sectionBackground: '#162033',
@@ -220,13 +220,6 @@ const textInputStyle = {
   fontSize: 14,
   width: '100%',
   boxSizing: 'border-box'
-} satisfies CSSProperties
-
-const controlGridStyle = {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-  gap: 16,
-  alignItems: 'start'
 } satisfies CSSProperties
 
 function isHexColor(value: string) {
@@ -869,155 +862,86 @@ function ThemePlayground() {
         minHeight: '100vh',
         padding: '28px 18px 56px',
         background:
-          'radial-gradient(circle at top, rgba(30, 41, 59, 0.65), rgba(2, 6, 23, 1) 55%)',
+          'radial-gradient(circle at 20% -10%, #17233b 0%, #081121 42%, #030711 100%)',
         color: '#f8fafc'
       }}
     >
-      <div style={{ maxWidth: 1440, margin: '0 auto', display: 'grid', gap: 22 }}>
-        <section
-          style={{
-            display: 'grid',
-            gap: 22
-          }}
-        >
-          <section
-            style={{
-              display: 'grid',
-              gap: 16,
-              padding: 18,
-              borderRadius: 30,
-              border: '1px solid #1f2b43',
-              background: '#081121'
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: 12
-              }}
-            >
-              <div>
-                <h2 style={{ margin: 0, fontSize: 22 }}>Preview</h2>
-                <p
-                  style={{
-                    margin: '6px 0 0',
-                    color: '#94a3b8',
-                    fontSize: 14
-                  }}
-                >
-                  Review the widget first, then refine the theme below.
-                </p>
-              </div>
-            </div>
-
-            <div
-              style={{
-                borderRadius: 28,
-                padding: '28px clamp(14px, 3vw, 28px)',
-                background:
-                  theme.pageBackground ||
-                  'radial-gradient(circle at 20% 10%, #fef3c7 0%, #dbeafe 35%, #f5d0fe 68%, #ecfeff 100%)',
-                border: `1px solid ${theme.previewCardBorder || '#1f2b43'}`,
-                minHeight: 760,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
+      <div style={{ maxWidth: 1640, margin: '0 auto', display: 'grid', gap: 22 }}>
+        <section className="theme-layout">
+          <div className="theme-config-panel">
+            <ControlSection
+              title="Configure"
+              description="Adjust the theme here. Presets are part of the configuration area."
             >
               <div
                 style={{
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'center'
+                  display: 'grid',
+                  gap: 8
                 }}
               >
-                <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                  <WheelxWidgetProvider>
-                    <WheelxBridgeSwapWidget config={widgetConfig} />
-                  </WheelxWidgetProvider>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <ControlSection
-            title="Configure"
-            description="Adjust the theme here. Presets are part of the configuration area."
-          >
-            <div
-              style={{
-                display: 'grid',
-                gap: 8
-              }}
-            >
-              <TextField
-                label="Referral Code"
-                value={referralCode}
-                onChange={setReferralCode}
-              />
-              <p style={{ margin: 0, color: '#94a3b8', fontSize: 13 }}>
-                Find your code at{' '}
-                <a
-                  href="https://affiliate.wheelx.fi/"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  style={{ color: '#7dd3fc', textDecoration: 'none' }}
-                >
-                  affiliate.wheelx.fi
-                </a>
-                .
-              </p>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: 10
-              }}
-            >
-              <button
-                onClick={applyDefaultPreset}
-                style={{
-                  padding: '11px 16px',
-                  borderRadius: 999,
-                  border: `1px solid ${themeKey === 'default' ? '#7dd3fc' : '#24324c'}`,
-                  background: themeKey === 'default' ? '#e0f2fe' : '#0f1b31',
-                  color: themeKey === 'default' ? '#082f49' : '#e2e8f0',
-                  fontWeight: 800,
-                  cursor: 'pointer',
-                  textTransform: 'capitalize'
-                }}
-              >
-                Default
-              </button>
-              {Object.keys(themePresets).map((key) => {
-                const active = themeKey === key
-                return (
-                  <button
-                    key={key}
-                    onClick={() => applyPreset(key as keyof typeof themePresets)}
-                    style={{
-                      padding: '11px 16px',
-                      borderRadius: 999,
-                      border: `1px solid ${active ? '#7dd3fc' : '#24324c'}`,
-                      background: active ? '#e0f2fe' : '#0f1b31',
-                      color: active ? '#082f49' : '#e2e8f0',
-                      fontWeight: 800,
-                      cursor: 'pointer',
-                      textTransform: 'capitalize'
-                    }}
+                <TextField
+                  label="Referral Code"
+                  value={referralCode}
+                  onChange={setReferralCode}
+                />
+                <p style={{ margin: 0, color: '#94a3b8', fontSize: 13 }}>
+                  Find your code at{' '}
+                  <a
+                    href="https://affiliate.wheelx.fi/"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    style={{ color: '#7dd3fc', textDecoration: 'none' }}
                   >
-                    {key}
-                  </button>
-                )
-              })}
-            </div>
-            <div
-              style={controlGridStyle}
-            >
+                    affiliate.wheelx.fi
+                  </a>
+                  .
+                </p>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: 10
+                }}
+              >
+                <button
+                  onClick={applyDefaultPreset}
+                  style={{
+                    padding: '11px 16px',
+                    borderRadius: 999,
+                    border: `1px solid ${themeKey === 'default' ? '#7dd3fc' : '#24324c'}`,
+                    background: themeKey === 'default' ? '#e0f2fe' : '#0f1b31',
+                    color: themeKey === 'default' ? '#082f49' : '#e2e8f0',
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                    textTransform: 'capitalize'
+                  }}
+                >
+                  Default
+                </button>
+                {Object.keys(themePresets).map((key) => {
+                  const active = themeKey === key
+                  return (
+                    <button
+                      key={key}
+                      onClick={() => applyPreset(key as keyof typeof themePresets)}
+                      style={{
+                        padding: '11px 16px',
+                        borderRadius: 999,
+                        border: `1px solid ${active ? '#7dd3fc' : '#24324c'}`,
+                        background: active ? '#e0f2fe' : '#0f1b31',
+                        color: active ? '#082f49' : '#e2e8f0',
+                        fontWeight: 800,
+                        cursor: 'pointer',
+                        textTransform: 'capitalize'
+                      }}
+                    >
+                      {key}
+                    </button>
+                  )
+                })}
+              </div>
+              <div className="theme-control-grid">
               <TextField
                 label="Preview Background"
                 value={theme.pageBackground}
@@ -1210,52 +1134,219 @@ function ThemePlayground() {
                 value={theme.tooltipBackground}
                 onChange={(value) => updateTheme('tooltipBackground', value)}
               />
-            </div>
-          </ControlSection>
+              </div>
+            </ControlSection>
+          </div>
 
-          <ControlSection
-            title="Generated Config"
-            description="Copy the generated config block directly into the host app."
+          <section
+            className="theme-preview-column"
+            style={{
+              display: 'grid',
+              gridTemplateRows: 'auto minmax(0, 1fr)',
+              gap: 16,
+              padding: 18,
+              borderRadius: 30,
+              border: '1px solid #1f2b43',
+              background: '#081121',
+              height: '100%',
+              minWidth: 0,
+              overflow: 'hidden'
+            }}
           >
             <div
               style={{
                 display: 'flex',
-                justifyContent: 'flex-end'
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: 12
               }}
             >
-              <button
-                onClick={handleCopy}
+              <div>
+                <h2 style={{ margin: 0, fontSize: 22 }}>Preview</h2>
+                <p
+                  style={{
+                    margin: '6px 0 0',
+                    color: '#94a3b8',
+                    fontSize: 14
+                  }}
+                >
+                  Review the widget first, then refine the theme below.
+                </p>
+              </div>
+            </div>
+
+            <div
+              style={{
+                width: '100%',
+                minHeight: 760,
+                height: '100%',
+                display: 'flex',
+                alignItems: 'flex-start',
+                justifyContent: 'center',
+                boxSizing: 'border-box',
+                overflow: 'hidden',
+                alignSelf: 'start'
+              }}
+            >
+              <div
+                className="theme-preview-widget-shell"
                 style={{
-                  padding: '11px 16px',
-                  borderRadius: 999,
-                  border: '1px solid #24324c',
-                  background: copyState === 'copied' ? '#99f6e4' : '#0f1b31',
-                  color: copyState === 'copied' ? '#134e4a' : '#e2e8f0',
-                  fontWeight: 800,
-                  cursor: 'pointer'
+                  padding: 0,
+                  backgroundColor:
+                    theme.previewCardBackground || 'rgba(255, 255, 255, 0.66)',
+                  backgroundImage:
+                    theme.pageBackground ||
+                    'linear-gradient(160deg, #edf3ff 0%, #e4ebff 52%, #ece7ff 100%)',
+                  border: `1px solid ${theme.previewCardBorder || '#1f2b43'}`,
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  justifyContent: 'center',
+                  boxSizing: 'border-box',
+                  overflow: 'hidden'
                 }}
               >
-                {copyState === 'copied' ? 'Copied' : 'Copy Config'}
-              </button>
+                <div
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <WheelxWidgetProvider>
+                    <WheelxBridgeSwapWidget config={widgetConfig} />
+                  </WheelxWidgetProvider>
+                </div>
+              </div>
             </div>
-            <pre
-              style={{
-                margin: 0,
-                padding: 18,
-                borderRadius: 22,
-                background: '#030712',
-                border: '1px solid #1f2b43',
-                color: '#dbeafe',
-                fontSize: 12,
-                lineHeight: 1.6,
-                overflowX: 'auto'
-              }}
+          </section>
+
+          <div className="theme-generated-panel">
+            <ControlSection
+              title="Generated Config"
+              description="Copy the generated config block directly into the host app."
             >
-              <code>{generatedConfig}</code>
-            </pre>
-          </ControlSection>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-end'
+                }}
+              >
+                <button
+                  onClick={handleCopy}
+                  style={{
+                    padding: '11px 16px',
+                    borderRadius: 999,
+                    border: '1px solid #24324c',
+                    background: copyState === 'copied' ? '#99f6e4' : '#0f1b31',
+                    color: copyState === 'copied' ? '#134e4a' : '#e2e8f0',
+                    fontWeight: 800,
+                    cursor: 'pointer'
+                  }}
+                >
+                  {copyState === 'copied' ? 'Copied' : 'Copy Config'}
+                </button>
+              </div>
+              <pre
+                style={{
+                  margin: 0,
+                  padding: 18,
+                  borderRadius: 22,
+                  background: '#030712',
+                  border: '1px solid #1f2b43',
+                  color: '#dbeafe',
+                  fontSize: 12,
+                  lineHeight: 1.6,
+                  overflowX: 'auto'
+                }}
+              >
+                <code>{generatedConfig}</code>
+              </pre>
+            </ControlSection>
+          </div>
         </section>
       </div>
+      <style jsx>{`
+        .theme-layout {
+          display: grid;
+          gap: 22px;
+          grid-template-columns: minmax(0, 1.7fr) minmax(360px, 1fr);
+          grid-template-areas:
+            'config preview'
+            'generated generated';
+          align-items: stretch;
+        }
+
+        .theme-config-panel {
+          grid-area: config;
+          min-width: 0;
+        }
+
+        .theme-generated-panel {
+          grid-area: generated;
+          min-width: 0;
+        }
+
+        .theme-preview-column {
+          grid-area: preview;
+          height: 100%;
+          min-width: 0;
+          align-self: stretch;
+        }
+
+        .theme-preview-widget-shell {
+          width: 100%;
+          height: 100%;
+          border-radius: 16px;
+        }
+
+        .theme-control-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 14px;
+          align-items: start;
+        }
+
+        @media (min-width: 480px) {
+          .theme-preview-widget-shell {
+            width: min(100%, 436px);
+          }
+        }
+
+        @media (max-width: 1024px) {
+          .theme-control-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+        }
+
+        @media (min-width: 768px) {
+          .theme-preview-widget-shell {
+            width: min(100%, 486px);
+            border-radius: 24px;
+          }
+        }
+
+        @media (max-width: 1240px) {
+          .theme-layout {
+            grid-template-columns: minmax(0, 1fr);
+            grid-template-areas:
+              'config'
+              'preview'
+              'generated';
+          }
+
+          .theme-preview-column {
+            position: static;
+          }
+
+        }
+
+        @media (max-width: 760px) {
+          .theme-control-grid {
+            grid-template-columns: minmax(0, 1fr);
+          }
+        }
+      `}</style>
     </main>
   )
 }
