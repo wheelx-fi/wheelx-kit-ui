@@ -1,4 +1,4 @@
-import { HStack, Spinner, VStack, Image, Box } from '@chakra-ui/react'
+import { HStack, Spinner, VStack, Box } from '@chakra-ui/react'
 import { TokenAndAddress } from './TokenAndAddress'
 import { TokenInfo, TokenInfoWithBalance, TokenBalance } from '../api'
 import { Text } from '../ui'
@@ -101,6 +101,19 @@ export const TokenList = ({
   const widgetStyles = useWheelxWidgetStyles()
   const categoryTabStyles = widgetStyles.tokenModalCategoryTab || {}
   const categoryTabActiveStyles = widgetStyles.tokenModalCategoryTabActive || {}
+  const emptyStateBackground =
+    (widgetStyles.tokenModalTokenPanel as { backgroundColor?: string } | undefined)
+      ?.backgroundColor ??
+    (widgetStyles.tokenModalContent as { backgroundColor?: string } | undefined)
+      ?.backgroundColor ??
+    '#fff'
+  const emptyStateColor =
+    (widgetStyles.tokenModalTokenSecondaryText as { color?: string } | undefined)
+      ?.color ??
+    (widgetStyles.tokenModalSectionLabelText as { color?: string } | undefined)
+      ?.color ??
+    (widgetStyles.tokenModalContent as { color?: string } | undefined)?.color ??
+    '#BEBEBE'
   const userTokens = useMemo(() => {
     return userBalances?.map((balance) => {
       return {
@@ -279,11 +292,21 @@ export const TokenList = ({
             justifyContent={'center'}
             gap={4}
             alignItems={'center'}
-            background={'#fff'}
+            background={emptyStateBackground}
             borderRadius={'20px'}
             w={'100%'}
           >
-            <Image src={getAssetSrc(noDataImage)} alt="no data" w={'120px'}></Image>
+            <Box
+              as={'span'}
+              w={'120px'}
+              h={'100px'}
+              backgroundColor={emptyStateColor}
+              opacity={0.5}
+              maskImage={`url(${getAssetSrc(noDataImage)})`}
+              maskPosition={'center center'}
+              maskRepeat={'no-repeat'}
+              maskSize={'contain'}
+            />
           </VStack>
         )
       }
