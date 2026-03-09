@@ -54,9 +54,9 @@ type ThemeState = {
 const themePresets: Record<string, ThemeState> = {
   aurora: {
     pageBackground:
-      'linear-gradient(160deg, #edf3ff 0%, #e4ebff 52%, #ece7ff 100%)',
-    previewCardBackground: 'rgba(255, 255, 255, 0.66)',
-    previewCardBorder: '#d6d8ff',
+      'linear-gradient(180deg, rgba(10,18,34,0.98), rgba(7,12,24,0.98))',
+    previewCardBackground: 'rgba(10,18,34,0.98)',
+    previewCardBorder: '#1f2b43',
     widgetBackground: '#fbfbff',
     widgetBorder: '#d9ddfb',
     sectionBackground: '#eef2ff',
@@ -94,9 +94,9 @@ const themePresets: Record<string, ThemeState> = {
   },
   ember: {
     pageBackground:
-      'linear-gradient(160deg, #131a2d 0%, #141f35 48%, #0f2c36 100%)',
-    previewCardBackground: 'rgba(15, 18, 31, 0.76)',
-    previewCardBorder: '#121212',
+      'linear-gradient(180deg, rgba(10,18,34,0.98), rgba(7,12,24,0.98))',
+    previewCardBackground: 'rgba(10,18,34,0.98)',
+    previewCardBorder: '#1f2b43',
     widgetBackground: '#161b2d',
     widgetBorder: '#31405f',
     sectionBackground: '#202842',
@@ -134,9 +134,9 @@ const themePresets: Record<string, ThemeState> = {
   },
   slate: {
     pageBackground:
-      'radial-gradient(circle at 10% 10%, #1d2638 0%, #0f172a 40%, #020617 100%)',
-    previewCardBackground: 'rgba(7, 11, 23, 0.78)',
-    previewCardBorder: '#182234',
+      'linear-gradient(180deg, rgba(10,18,34,0.98), rgba(7,12,24,0.98))',
+    previewCardBackground: 'rgba(10,18,34,0.98)',
+    previewCardBorder: '#1f2b43',
     widgetBackground: '#0f172a',
     widgetBorder: '#334155',
     sectionBackground: '#162033',
@@ -1194,10 +1194,10 @@ function ThemePlayground() {
                 style={{
                   padding: 0,
                   backgroundColor:
-                    theme.previewCardBackground || 'rgba(255, 255, 255, 0.66)',
+                    theme.previewCardBackground || 'rgba(10,18,34,0.98)',
                   backgroundImage:
                     theme.pageBackground ||
-                    'linear-gradient(160deg, #edf3ff 0%, #e4ebff 52%, #ece7ff 100%)',
+                    'linear-gradient(180deg, rgba(10,18,34,0.98), rgba(7,12,24,0.98))',
                   border: `1px solid ${theme.previewCardBorder || '#1f2b43'}`,
                   display: 'flex',
                   alignItems: 'flex-start',
