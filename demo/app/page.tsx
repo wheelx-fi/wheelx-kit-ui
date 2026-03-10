@@ -190,7 +190,7 @@ export default function Home() {
           align-items: center;
           color: #5d5c5d;
           text-decoration: none;
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 400;
           white-space: nowrap;
           line-height: 1;
