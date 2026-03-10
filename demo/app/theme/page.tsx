@@ -263,12 +263,14 @@ function ColorField({
         }}
       >
         <input
+          className="theme-field-control"
           value={value}
           onChange={(event) => onChange(event.target.value)}
           style={textInputStyle}
         />
         {allowPicker ? (
           <input
+            className="theme-color-control"
             type="color"
             value={value}
             onChange={(event) => onChange(event.target.value)}
@@ -301,6 +303,7 @@ function TextField({
   return (
     <FieldShell label={label}>
       <input
+        className="theme-field-control"
         value={value}
         onChange={(event) => onChange(event.target.value)}
         style={{
@@ -325,6 +328,7 @@ function SelectField({
   return (
     <FieldShell label={label}>
       <select
+        className="theme-field-control"
         value={value}
         onChange={(event) => onChange(event.target.value)}
         style={textInputStyle}
@@ -791,12 +795,12 @@ function ThemePlayground() {
   )
   const [theme, setTheme] = useState<ThemeState>(themePresets.aurora)
   const [isSparseMode, setIsSparseMode] = useState(false)
+  const [copyState, setCopyState] = useState<'idle' | 'copied'>('idle')
   const [referralCode, setReferralCode] = useState(
     typeof demoWidgetConfig.referralCode === 'string'
       ? demoWidgetConfig.referralCode
       : ''
   )
-  const [copyState, setCopyState] = useState<'idle' | 'copied'>('idle')
 
   const widgetConfig = useMemo<WheelxWidgetConfig>(
     () => {
@@ -853,7 +857,9 @@ function ThemePlayground() {
   const handleCopy = async () => {
     await navigator.clipboard.writeText(generatedConfig)
     setCopyState('copied')
-    window.setTimeout(() => setCopyState('idle'), 1200)
+    window.setTimeout(() => {
+      setCopyState('idle')
+    }, 1600)
   }
 
   return (
@@ -873,267 +879,269 @@ function ThemePlayground() {
               title="Configure"
               description="Adjust the theme here. Presets are part of the configuration area."
             >
-              <div
-                style={{
-                  display: 'grid',
-                  gap: 8
-                }}
-              >
-                <TextField
-                  label="Referral Code"
-                  value={referralCode}
-                  onChange={setReferralCode}
-                />
-                <p style={{ margin: 0, color: '#94a3b8', fontSize: 13 }}>
-                  Get your code from{' '}
-                  <a
-                    href="https://affiliate.wheelx.fi/"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    style={{ color: '#7dd3fc', textDecoration: 'none' }}
-                  >
-                    affiliate.wheelx.fi
-                  </a>
-                  {' '}and earn up to 15% commission.
-                </p>
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: 10
-                }}
-              >
-                <button
-                  onClick={applyDefaultPreset}
+              <div className="theme-config-scroll">
+                <div
                   style={{
-                    padding: '11px 16px',
-                    borderRadius: 999,
-                    border: `1px solid ${themeKey === 'default' ? '#7dd3fc' : '#24324c'}`,
-                    background: themeKey === 'default' ? '#e0f2fe' : '#0f1b31',
-                    color: themeKey === 'default' ? '#082f49' : '#e2e8f0',
-                    fontWeight: 800,
-                    cursor: 'pointer',
-                    textTransform: 'capitalize'
+                    display: 'grid',
+                    gap: 8
                   }}
                 >
-                  Default
-                </button>
-                {Object.keys(themePresets).map((key) => {
-                  const active = themeKey === key
-                  return (
-                    <button
-                      key={key}
-                      onClick={() => applyPreset(key as keyof typeof themePresets)}
-                      style={{
-                        padding: '11px 16px',
-                        borderRadius: 999,
-                        border: `1px solid ${active ? '#7dd3fc' : '#24324c'}`,
-                        background: active ? '#e0f2fe' : '#0f1b31',
-                        color: active ? '#082f49' : '#e2e8f0',
-                        fontWeight: 800,
-                        cursor: 'pointer',
-                        textTransform: 'capitalize'
-                      }}
+                  <TextField
+                    label="Referral Code"
+                    value={referralCode}
+                    onChange={setReferralCode}
+                  />
+                  <p style={{ margin: 0, color: '#94a3b8', fontSize: 13 }}>
+                    Get your code from{' '}
+                    <a
+                      href="https://affiliate.wheelx.fi/"
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      style={{ color: '#7dd3fc', textDecoration: 'none' }}
                     >
-                      {key}
-                    </button>
-                  )
-                })}
-              </div>
-              <div className="theme-control-grid">
-              <TextField
-                label="Preview Background"
-                value={theme.pageBackground}
-                onChange={(value) => updateTheme('pageBackground', value)}
-              />
-              <TextField
-                label="Preview Frosted Surface"
-                value={theme.previewCardBackground}
-                onChange={(value) => updateTheme('previewCardBackground', value)}
-              />
-              <ColorField
-                label="Preview Card Border"
-                value={theme.previewCardBorder}
-                onChange={(value) => updateTheme('previewCardBorder', value)}
-              />
-              <SelectField
-                label="Font Family"
-                value={theme.fontFamily}
-                options={fontOptions}
-                onChange={(value) => updateTheme('fontFamily', value)}
-              />
-              <ColorField
-                label="Title"
-                value={theme.titleColor}
-                onChange={(value) => updateTheme('titleColor', value)}
-              />
-              <ColorField
-                label="Primary Text"
-                value={theme.textPrimary}
-                onChange={(value) => updateTheme('textPrimary', value)}
-              />
-              <ColorField
-                label="Secondary Text"
-                value={theme.textSecondary}
-                onChange={(value) => updateTheme('textSecondary', value)}
-              />
-              <ColorField
-                label="Footer Text"
-                value={theme.footerText}
-                onChange={(value) => updateTheme('footerText', value)}
-              />
-              <ColorField
-                label="Widget Background"
-                value={theme.widgetBackground}
-                onChange={(value) => updateTheme('widgetBackground', value)}
-              />
-              <ColorField
-                label="Widget Border"
-                value={theme.widgetBorder}
-                onChange={(value) => updateTheme('widgetBorder', value)}
-              />
-              <ColorField
-                label="Section Background"
-                value={theme.sectionBackground}
-                onChange={(value) => updateTheme('sectionBackground', value)}
-              />
-              <ColorField
-                label="Section Border"
-                value={theme.sectionBorder}
-                onChange={(value) => updateTheme('sectionBorder', value)}
-              />
-              <ColorField
-                label="Input Background"
-                value={theme.inputBackground}
-                onChange={(value) => updateTheme('inputBackground', value)}
-              />
-              <ColorField
-                label="Input Border"
-                value={theme.inputBorder}
-                onChange={(value) => updateTheme('inputBorder', value)}
-              />
-              <ColorField
-                label="Recipient Badge"
-                value={theme.badgeBackground}
-                onChange={(value) => updateTheme('badgeBackground', value)}
-              />
-              <ColorField
-                label="Badge Text"
-                value={theme.badgeText}
-                onChange={(value) => updateTheme('badgeText', value)}
-              />
-              <ColorField
-                label="Token Icon Badge"
-                value={theme.tokenIconBadgeBackground}
-                onChange={(value) => updateTheme('tokenIconBadgeBackground', value)}
-              />
-              <ColorField
-                label="Token Icon Badge Border"
-                value={theme.tokenIconBadgeBorder}
-                onChange={(value) => updateTheme('tokenIconBadgeBorder', value)}
-              />
-              <ColorField
-                label="Button Start"
-                value={theme.buttonStart}
-                onChange={(value) => updateTheme('buttonStart', value)}
-              />
-              <ColorField
-                label="Button End"
-                value={theme.buttonEnd}
-                onChange={(value) => updateTheme('buttonEnd', value)}
-              />
-              <ColorField
-                label="Button Text"
-                value={theme.buttonText}
-                onChange={(value) => updateTheme('buttonText', value)}
-              />
-              <ColorField
-                label="Quick 50% Button"
-                value={theme.quickHalfButtonBackground}
-                onChange={(value) =>
-                  updateTheme('quickHalfButtonBackground', value)
-                }
-              />
-              <ColorField
-                label="Quick Max Button"
-                value={theme.quickMaxButtonBackground}
-                onChange={(value) =>
-                  updateTheme('quickMaxButtonBackground', value)
-                }
-              />
-              <ColorField
-                label="Quick 50% Text"
-                value={theme.quickButtonText}
-                onChange={(value) => updateTheme('quickButtonText', value)}
-              />
-              <ColorField
-                label="Quick Max Text"
-                value={theme.quickMaxButtonText}
-                onChange={(value) => updateTheme('quickMaxButtonText', value)}
-              />
-              <ColorField
-                label="Utility Button Surface"
-                value={theme.iconButtonBackground}
-                onChange={(value) => updateTheme('iconButtonBackground', value)}
-              />
-              <ColorField
-                label="Free Badge"
-                value={theme.freeBadgeBackground}
-                onChange={(value) => updateTheme('freeBadgeBackground', value)}
-              />
-              <ColorField
-                label="Free Badge Text"
-                value={theme.freeBadgeText}
-                onChange={(value) => updateTheme('freeBadgeText', value)}
-              />
-              <ColorField
-                label="Modal Background"
-                value={theme.modalBackground}
-                onChange={(value) => updateTheme('modalBackground', value)}
-              />
-              <ColorField
-                label="Modal Panel"
-                value={theme.modalPanelBackground}
-                onChange={(value) => updateTheme('modalPanelBackground', value)}
-              />
-              <ColorField
-                label="Modal Search"
-                value={theme.modalSearchBackground}
-                onChange={(value) => updateTheme('modalSearchBackground', value)}
-              />
-              <ColorField
-                label="Modal Tab"
-                value={theme.modalTabBackground}
-                onChange={(value) => updateTheme('modalTabBackground', value)}
-              />
-              <ColorField
-                label="Modal Active Tab"
-                value={theme.modalTabActiveBackground}
-                onChange={(value) =>
-                  updateTheme('modalTabActiveBackground', value)
-                }
-              />
-              <ColorField
-                label="Modal Hover Row"
-                value={theme.modalRowHoverBackground}
-                onChange={(value) => updateTheme('modalRowHoverBackground', value)}
-              />
-              <ColorField
-                label="Quote Background"
-                value={theme.quoteBackground}
-                onChange={(value) => updateTheme('quoteBackground', value)}
-              />
-              <ColorField
-                label="Quote Card"
-                value={theme.quoteCardBackground}
-                onChange={(value) => updateTheme('quoteCardBackground', value)}
-              />
-              <ColorField
-                label="Tooltip Background"
-                value={theme.tooltipBackground}
-                onChange={(value) => updateTheme('tooltipBackground', value)}
-              />
+                      affiliate.wheelx.fi
+                    </a>
+                    {' '}and earn up to 15% commission.
+                  </p>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: 10
+                  }}
+                >
+                  <button
+                    onClick={applyDefaultPreset}
+                    style={{
+                      padding: '11px 16px',
+                      borderRadius: 999,
+                      border: `1px solid ${themeKey === 'default' ? '#7dd3fc' : '#24324c'}`,
+                      background: themeKey === 'default' ? '#e0f2fe' : '#0f1b31',
+                      color: themeKey === 'default' ? '#082f49' : '#e2e8f0',
+                      fontWeight: 800,
+                      cursor: 'pointer',
+                      textTransform: 'capitalize'
+                    }}
+                  >
+                    Default
+                  </button>
+                  {Object.keys(themePresets).map((key) => {
+                    const active = themeKey === key
+                    return (
+                      <button
+                        key={key}
+                        onClick={() => applyPreset(key as keyof typeof themePresets)}
+                        style={{
+                          padding: '11px 16px',
+                          borderRadius: 999,
+                          border: `1px solid ${active ? '#7dd3fc' : '#24324c'}`,
+                          background: active ? '#e0f2fe' : '#0f1b31',
+                          color: active ? '#082f49' : '#e2e8f0',
+                          fontWeight: 800,
+                          cursor: 'pointer',
+                          textTransform: 'capitalize'
+                        }}
+                      >
+                        {key}
+                      </button>
+                    )
+                  })}
+                </div>
+                <div className="theme-control-grid">
+                <TextField
+                  label="Preview Background"
+                  value={theme.pageBackground}
+                  onChange={(value) => updateTheme('pageBackground', value)}
+                />
+                <TextField
+                  label="Preview Frosted Surface"
+                  value={theme.previewCardBackground}
+                  onChange={(value) => updateTheme('previewCardBackground', value)}
+                />
+                <ColorField
+                  label="Preview Card Border"
+                  value={theme.previewCardBorder}
+                  onChange={(value) => updateTheme('previewCardBorder', value)}
+                />
+                <SelectField
+                  label="Font Family"
+                  value={theme.fontFamily}
+                  options={fontOptions}
+                  onChange={(value) => updateTheme('fontFamily', value)}
+                />
+                <ColorField
+                  label="Title"
+                  value={theme.titleColor}
+                  onChange={(value) => updateTheme('titleColor', value)}
+                />
+                <ColorField
+                  label="Primary Text"
+                  value={theme.textPrimary}
+                  onChange={(value) => updateTheme('textPrimary', value)}
+                />
+                <ColorField
+                  label="Secondary Text"
+                  value={theme.textSecondary}
+                  onChange={(value) => updateTheme('textSecondary', value)}
+                />
+                <ColorField
+                  label="Footer Text"
+                  value={theme.footerText}
+                  onChange={(value) => updateTheme('footerText', value)}
+                />
+                <ColorField
+                  label="Widget Background"
+                  value={theme.widgetBackground}
+                  onChange={(value) => updateTheme('widgetBackground', value)}
+                />
+                <ColorField
+                  label="Widget Border"
+                  value={theme.widgetBorder}
+                  onChange={(value) => updateTheme('widgetBorder', value)}
+                />
+                <ColorField
+                  label="Section Background"
+                  value={theme.sectionBackground}
+                  onChange={(value) => updateTheme('sectionBackground', value)}
+                />
+                <ColorField
+                  label="Section Border"
+                  value={theme.sectionBorder}
+                  onChange={(value) => updateTheme('sectionBorder', value)}
+                />
+                <ColorField
+                  label="Input Background"
+                  value={theme.inputBackground}
+                  onChange={(value) => updateTheme('inputBackground', value)}
+                />
+                <ColorField
+                  label="Input Border"
+                  value={theme.inputBorder}
+                  onChange={(value) => updateTheme('inputBorder', value)}
+                />
+                <ColorField
+                  label="Recipient Badge"
+                  value={theme.badgeBackground}
+                  onChange={(value) => updateTheme('badgeBackground', value)}
+                />
+                <ColorField
+                  label="Badge Text"
+                  value={theme.badgeText}
+                  onChange={(value) => updateTheme('badgeText', value)}
+                />
+                <ColorField
+                  label="Token Icon Badge"
+                  value={theme.tokenIconBadgeBackground}
+                  onChange={(value) => updateTheme('tokenIconBadgeBackground', value)}
+                />
+                <ColorField
+                  label="Token Icon Badge Border"
+                  value={theme.tokenIconBadgeBorder}
+                  onChange={(value) => updateTheme('tokenIconBadgeBorder', value)}
+                />
+                <ColorField
+                  label="Button Start"
+                  value={theme.buttonStart}
+                  onChange={(value) => updateTheme('buttonStart', value)}
+                />
+                <ColorField
+                  label="Button End"
+                  value={theme.buttonEnd}
+                  onChange={(value) => updateTheme('buttonEnd', value)}
+                />
+                <ColorField
+                  label="Button Text"
+                  value={theme.buttonText}
+                  onChange={(value) => updateTheme('buttonText', value)}
+                />
+                <ColorField
+                  label="Quick 50% Button"
+                  value={theme.quickHalfButtonBackground}
+                  onChange={(value) =>
+                    updateTheme('quickHalfButtonBackground', value)
+                  }
+                />
+                <ColorField
+                  label="Quick Max Button"
+                  value={theme.quickMaxButtonBackground}
+                  onChange={(value) =>
+                    updateTheme('quickMaxButtonBackground', value)
+                  }
+                />
+                <ColorField
+                  label="Quick 50% Text"
+                  value={theme.quickButtonText}
+                  onChange={(value) => updateTheme('quickButtonText', value)}
+                />
+                <ColorField
+                  label="Quick Max Text"
+                  value={theme.quickMaxButtonText}
+                  onChange={(value) => updateTheme('quickMaxButtonText', value)}
+                />
+                <ColorField
+                  label="Utility Button Surface"
+                  value={theme.iconButtonBackground}
+                  onChange={(value) => updateTheme('iconButtonBackground', value)}
+                />
+                <ColorField
+                  label="Free Badge"
+                  value={theme.freeBadgeBackground}
+                  onChange={(value) => updateTheme('freeBadgeBackground', value)}
+                />
+                <ColorField
+                  label="Free Badge Text"
+                  value={theme.freeBadgeText}
+                  onChange={(value) => updateTheme('freeBadgeText', value)}
+                />
+                <ColorField
+                  label="Modal Background"
+                  value={theme.modalBackground}
+                  onChange={(value) => updateTheme('modalBackground', value)}
+                />
+                <ColorField
+                  label="Modal Panel"
+                  value={theme.modalPanelBackground}
+                  onChange={(value) => updateTheme('modalPanelBackground', value)}
+                />
+                <ColorField
+                  label="Modal Search"
+                  value={theme.modalSearchBackground}
+                  onChange={(value) => updateTheme('modalSearchBackground', value)}
+                />
+                <ColorField
+                  label="Modal Tab"
+                  value={theme.modalTabBackground}
+                  onChange={(value) => updateTheme('modalTabBackground', value)}
+                />
+                <ColorField
+                  label="Modal Active Tab"
+                  value={theme.modalTabActiveBackground}
+                  onChange={(value) =>
+                    updateTheme('modalTabActiveBackground', value)
+                  }
+                />
+                <ColorField
+                  label="Modal Hover Row"
+                  value={theme.modalRowHoverBackground}
+                  onChange={(value) => updateTheme('modalRowHoverBackground', value)}
+                />
+                <ColorField
+                  label="Quote Background"
+                  value={theme.quoteBackground}
+                  onChange={(value) => updateTheme('quoteBackground', value)}
+                />
+                <ColorField
+                  label="Quote Card"
+                  value={theme.quoteCardBackground}
+                  onChange={(value) => updateTheme('quoteCardBackground', value)}
+                />
+                <ColorField
+                  label="Tooltip Background"
+                  value={theme.tooltipBackground}
+                  onChange={(value) => updateTheme('tooltipBackground', value)}
+                />
+                </div>
               </div>
             </ControlSection>
           </div>
@@ -1148,7 +1156,6 @@ function ThemePlayground() {
               borderRadius: 30,
               border: '1px solid #1f2b43',
               background: '#081121',
-              height: '100%',
               minWidth: 0,
               overflow: 'hidden'
             }}
@@ -1177,15 +1184,14 @@ function ThemePlayground() {
             </div>
 
             <div
+              className="theme-preview-stage"
               style={{
                 width: '100%',
-                minHeight: 760,
-                height: '100%',
                 display: 'flex',
                 alignItems: 'flex-start',
                 justifyContent: 'center',
                 boxSizing: 'border-box',
-                overflow: 'hidden',
+                overflow: 'visible',
                 alignSelf: 'start'
               }}
             >
@@ -1226,55 +1232,62 @@ function ThemePlayground() {
               title="Generated Config"
               description="Copy the generated config block directly into the host app."
             >
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-end'
-                }}
-              >
+              <div className="theme-code-frame">
                 <button
                   onClick={handleCopy}
+                  className="theme-copy-button"
+                >
+                  {copyState === 'copied' ? 'Copied' : 'Copy'}
+                </button>
+                <pre
+                  className="theme-code-scroll"
                   style={{
-                    padding: '11px 16px',
-                    borderRadius: 999,
-                    border: '1px solid #24324c',
-                    background: copyState === 'copied' ? '#99f6e4' : '#0f1b31',
-                    color: copyState === 'copied' ? '#134e4a' : '#e2e8f0',
-                    fontWeight: 800,
-                    cursor: 'pointer'
+                    margin: 0,
+                    padding: '18px 18px 18px',
+                    borderRadius: 22,
+                    background: '#030712',
+                    border: '1px solid #1f2b43',
+                    color: '#dbeafe',
+                    fontSize: 12,
+                    lineHeight: 1.6,
+                    overflowX: 'auto'
                   }}
                 >
-                  {copyState === 'copied' ? 'Copied' : 'Copy Config'}
-                </button>
+                  <code>{generatedConfig}</code>
+                </pre>
               </div>
-              <pre
-                style={{
-                  margin: 0,
-                  padding: 18,
-                  borderRadius: 22,
-                  background: '#030712',
-                  border: '1px solid #1f2b43',
-                  color: '#dbeafe',
-                  fontSize: 12,
-                  lineHeight: 1.6,
-                  overflowX: 'auto'
-                }}
-              >
-                <code>{generatedConfig}</code>
-              </pre>
             </ControlSection>
           </div>
         </section>
       </div>
       <style jsx>{`
+        :global(.theme-field-control),
+        :global(.theme-color-control) {
+          outline: none;
+          transition:
+            border-color 0.15s ease,
+            box-shadow 0.15s ease;
+        }
+
+        :global(.theme-field-control:focus),
+        :global(.theme-field-control:focus-visible),
+        :global(.theme-color-control:focus),
+        :global(.theme-color-control:focus-visible) {
+          outline: none;
+          border-color: #93c5fd !important;
+          box-shadow: inset 0 0 0 1px #dbeafe;
+        }
+
         .theme-layout {
+          --theme-config-scroll-height: min(100vh, 667px);
+          --theme-top-panel-height: calc(var(--theme-config-scroll-height) + 115px);
           display: grid;
           gap: 22px;
           grid-template-columns: minmax(0, 1.7fr) minmax(360px, 1fr);
           grid-template-areas:
             'config preview'
             'generated generated';
-          align-items: stretch;
+          align-items: start;
         }
 
         .theme-config-panel {
@@ -1289,15 +1302,27 @@ function ThemePlayground() {
 
         .theme-preview-column {
           grid-area: preview;
-          height: 100%;
           min-width: 0;
-          align-self: stretch;
+          align-self: start;
+          height: var(--theme-top-panel-height);
         }
 
         .theme-preview-widget-shell {
           width: 100%;
-          height: 100%;
           border-radius: 16px;
+        }
+
+        .theme-preview-stage {
+          min-height: 0;
+          height: 100%;
+        }
+
+        .theme-config-scroll {
+          display: grid;
+          gap: 18px;
+          max-height: var(--theme-config-scroll-height);
+          overflow: auto;
+          padding-right: 6px;
         }
 
         .theme-control-grid {
@@ -1307,9 +1332,34 @@ function ThemePlayground() {
           align-items: start;
         }
 
+        .theme-code-frame {
+          position: relative;
+        }
+
+        .theme-copy-button {
+          position: absolute;
+          top: 14px;
+          right: 14px;
+          z-index: 1;
+          padding: 6px 10px;
+          border-radius: 999px;
+          border: 1px solid #24324c;
+          background: rgba(15, 27, 49, 0.92);
+          color: #e2e8f0;
+          font-size: 12px;
+          font-weight: 800;
+          cursor: pointer;
+        }
+
+        .theme-code-scroll {
+          max-height: min(72vh, 720px);
+          overflow: auto;
+          padding-top: 48px;
+        }
+
         @media (min-width: 480px) {
           .theme-preview-widget-shell {
-            width: min(100%, 436px);
+            width: min(100%, 432px);
           }
         }
 
@@ -1321,7 +1371,7 @@ function ThemePlayground() {
 
         @media (min-width: 768px) {
           .theme-preview-widget-shell {
-            width: min(100%, 486px);
+            width: min(100%, 482px);
             border-radius: 24px;
           }
         }
@@ -1337,11 +1387,22 @@ function ThemePlayground() {
 
           .theme-preview-column {
             position: static;
+            height: auto;
           }
 
         }
 
         @media (max-width: 760px) {
+          .theme-config-scroll {
+            max-height: none;
+            overflow: visible;
+            padding-right: 0;
+          }
+
+          .theme-code-scroll {
+            max-height: min(60vh, 520px);
+          }
+
           .theme-control-grid {
             grid-template-columns: minmax(0, 1fr);
           }
