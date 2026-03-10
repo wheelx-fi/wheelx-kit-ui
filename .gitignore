@@ -9,3 +9,5 @@ dist
 demo/node_modules
 demo/.next
 demo/.env.local
+docs/gitbook
+_book
