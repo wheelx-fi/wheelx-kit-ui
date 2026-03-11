@@ -1,6 +1,7 @@
 'use client'
 
 import type { CSSProperties, ReactNode } from 'react'
+import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import {
   WheelxBridgeSwapWidget,
@@ -193,6 +194,26 @@ const fontOptions = [
   { label: 'Trebuchet MS', value: '"Trebuchet MS", sans-serif' },
   { label: 'Courier New', value: '"Courier New", monospace' },
   { label: 'Times New Roman', value: '"Times New Roman", serif' }
+]
+
+const footerLinks = [
+  { label: 'API & SDK', href: 'https://docs.wheelx.fi/rest-api' },
+  { label: 'Affiliate', href: 'https://affiliate.wheelx.fi/' },
+  { label: 'Media Kit', href: 'https://docs.wheelx.fi/others/media-kit' },
+  { label: 'Ecosystem', href: 'https://wheelx.fi/ecosystem' },
+  {
+    label: 'Support',
+    href: 'https://discord.com/channels/1373302070362378301/1376829648524148806'
+  }
+]
+
+const socialLinks = [
+  { label: 'YouTube', href: 'https://www.youtube.com/@wheelxfi', icon: '/footer-icons/youtube.svg' },
+  { label: 'X', href: 'https://x.com/intent/follow?screen_name=WheelX_fi', icon: '/footer-icons/x.svg' },
+  { label: 'Discord', href: 'https://discord.gg/GaqW8QEVTF', icon: '/footer-icons/discord.svg' },
+  { label: 'GitHub', href: 'https://github.com/wheelx-fi', icon: '/footer-icons/github.svg' },
+  { label: 'Docs', href: 'https://docs.wheelx.fi', icon: '/footer-icons/doc.svg' },
+  { label: 'Medium', href: 'https://medium.com/@wheelx.fi', icon: '/footer-icons/medium.svg' }
 ]
 
 const fieldShellStyle = {
@@ -1259,6 +1280,44 @@ function ThemePlayground() {
             </ControlSection>
           </div>
         </section>
+
+        <footer className="theme-footer">
+          <nav className="theme-footer-links" aria-label="WheelX footer links">
+            {footerLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                className="theme-footer-link"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="theme-footer-social" aria-label="WheelX social links">
+            {socialLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={link.label}
+                title={link.label}
+                className="theme-footer-social-link"
+              >
+                <img
+                  src={link.icon}
+                  alt={link.label}
+                  width={20}
+                  height={20}
+                  className="theme-footer-social-icon"
+                />
+              </Link>
+            ))}
+          </div>
+        </footer>
       </div>
       <style jsx>{`
         :global(.theme-field-control),
@@ -1357,6 +1416,74 @@ function ThemePlayground() {
           padding-top: 48px;
         }
 
+        .theme-footer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 20px;
+          padding: 16px 18px;
+          border-radius: 22px;
+          border: 1px solid #1f2b43;
+          background: linear-gradient(180deg, rgba(10, 18, 34, 0.92), rgba(7, 12, 24, 0.96));
+          box-shadow: 0 18px 48px rgba(2, 6, 23, 0.22);
+        }
+
+        .theme-footer-links {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 10px 18px;
+        }
+
+        :global(a.theme-footer-link) {
+          display: inline-flex;
+          align-items: center;
+          color: #94a3b8;
+          text-decoration: none;
+          font-size: 13px;
+          font-weight: 400;
+          line-height: 1;
+          transition: color 0.15s ease;
+          cursor: pointer;
+          outline: none;
+        }
+
+        :global(a.theme-footer-link:hover) {
+          color: #c4b5fd;
+        }
+
+        .theme-footer-social {
+          display: flex;
+          flex: 1;
+          justify-content: flex-end;
+          align-items: center;
+          gap: 22px;
+        }
+
+        .theme-footer-social-link {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+        }
+
+        .theme-footer-social-icon {
+          display: block;
+          width: 20px;
+          height: 20px;
+          opacity: 0.82;
+          transition:
+            opacity 0.15s ease,
+            filter 0.15s ease,
+            transform 0.15s ease;
+        }
+
+        .theme-footer-social-link:hover .theme-footer-social-icon {
+          opacity: 1;
+          filter: brightness(1.2) saturate(1.08);
+          transform: translateY(-1px);
+        }
+
         @media (min-width: 480px) {
           .theme-preview-widget-shell {
             width: min(100%, 432px);
@@ -1405,6 +1532,18 @@ function ThemePlayground() {
 
           .theme-control-grid {
             grid-template-columns: minmax(0, 1fr);
+          }
+
+          .theme-footer {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+
+          .theme-footer-social {
+            width: 100%;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            gap: 16px;
           }
         }
       `}</style>
